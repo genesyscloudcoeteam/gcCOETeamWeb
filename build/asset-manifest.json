@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/gcCOETeamWeb/static/css/main.82d08679.css",
+    "main.js": "/gcCOETeamWeb/static/js/main.908721b5.js",
+    "index.html": "/gcCOETeamWeb/index.html",
+    "main.82d08679.css.map": "/gcCOETeamWeb/static/css/main.82d08679.css.map",
+    "main.908721b5.js.map": "/gcCOETeamWeb/static/js/main.908721b5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.82d08679.css",
+    "static/js/main.908721b5.js"
+  ]
+}
