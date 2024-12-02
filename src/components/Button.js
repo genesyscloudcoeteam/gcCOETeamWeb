@@ -1,3 +1,4 @@
+/* global Genesys */
 import React from "react";
 
 const Button = ({ text, onClick }) => {

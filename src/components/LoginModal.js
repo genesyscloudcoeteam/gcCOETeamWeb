@@ -1,3 +1,4 @@
+/* global Genesys */
 import React, { useState } from "react";
 
 const LoginModal = ({ onClose }) => {
