@@ -41,7 +41,9 @@ const LoginModal = ({ onClose }) => {
             required
           />
           <button type="submit">Login</button>
-          <button type="button" onClick={onClose}>Cancel</button>
+          <button type="button" onClick={onClose}>
+            Cancel
+          </button>
         </form>
       </div>
     </div>

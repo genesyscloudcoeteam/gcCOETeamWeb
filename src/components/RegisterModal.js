@@ -77,7 +77,9 @@ const RegisterModal = ({ onClose }) => {
           />
           {error && <p className="error">{error}</p>}
           <button type="submit">Register</button>
-          <button type="button" onClick={onClose}>Cancel</button>
+          <button type="button" onClick={onClose}>
+            Cancel
+          </button>
         </form>
       </div>
     </div>
