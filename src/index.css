@@ -27,20 +27,21 @@ main {
     min-height: 100vh; /* Ensure it stretches to the full viewport height */
   }
   
-  /* Navbar */
-  nav {
-    background-color: var(--main-color);
-    color: var(--text-color-light);
-    padding: 10px 20px;
+ /* Navbar container */
+nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Space between left and right content */
+    align-items: center; /* Vertically center items */
+    padding: 10px 20px; /* Add padding around the navbar */
+    background-color: var(--main-color); /* Use the main theme color */
+    color: var(--text-color-light); /* Use white text for dark background */
   }
   
+  /* Navbar links container */
   nav ul {
     list-style-type: none;
     display: flex;
-    gap: 15px;
+    gap: 20px; /* Add space between links */
     margin: 0;
     padding: 0;
   }
