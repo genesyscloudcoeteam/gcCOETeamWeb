@@ -38,6 +38,9 @@ const App = () => {
     } else {
       console.log("Genesys script already loaded.");
     }
+    Genesys("subscribe", "Journey.ready", function() {
+      console.log("Journey plugin is ready.")
+    });
   };
 
   // Initialize Genesys script when the app loads

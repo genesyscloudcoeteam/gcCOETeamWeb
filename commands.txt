@@ -1,0 +1,7 @@
+Command	Purpose
+git pull origin main	Pull changes from the remote repository.
+git add .	Stage all changes for commit.
+git commit -m "message"	Commit staged changes locally.
+git push origin main	Push local changes to the remote branch.
+npm run build	Build the project for production.
+npm run deploy	Deploy to the gh-pages branch.
