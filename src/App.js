@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -12,6 +12,9 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 
 const App = () => {
+  const location = useLocation();
+
+  // Function to initialize Genesys script
   const initializeApp = () => {
     console.log("Initializing Genesys script...");
 
@@ -37,30 +40,56 @@ const App = () => {
     }
   };
 
+  // Initialize Genesys script when the app loads
   useEffect(() => {
     initializeApp();
   }, []);
 
+  // Update the page title dynamically based on the route
+  useEffect(() => {
+    const titles = {
+      "/": "Home",
+      "/about": "About",
+      "/shop": "Shop",
+      "/cart": "Cart",
+      "/checkout": "Checkout",
+      "/register": "Register",
+      "/login": "Login",
+    };
+
+    // Handle dynamic title for product pages
+    const currentTitle = location.pathname.startsWith("/product/")
+      ? "Product Details"
+      : titles[location.pathname] || "gcCOETeamWeb";
+
+    document.title = currentTitle;
+  }, [location]);
+
   return (
-    <Router basename="/gcCOETeamWeb">
-      <div>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
-export default App;
+// Wrapper to include Router with a base path
+const AppWrapper = () => (
+  <Router basename="/gcCOETeamWeb">
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
