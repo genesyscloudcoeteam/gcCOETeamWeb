@@ -66,9 +66,9 @@ const App = () => {
   }, [location]);
 
   return (
-    <Router basename="/gcCOETeamWeb">
+    <Router>
     <div id="root">
-        <Navbar />
+      <Navbar />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
