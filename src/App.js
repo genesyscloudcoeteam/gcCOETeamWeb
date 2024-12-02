@@ -1,6 +1,6 @@
 /* global Genesys */
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -10,11 +10,14 @@ import Product from "./components/Product";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import CookieConsent from "./components/CookieConsent";
+import RegisterModal from "./components/RegisterModal"; // Import RegisterModal
+import LoginModal from "./components/LoginModal"; // Import LoginModal
 
 const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
+  const location = useLocation(); // Use the hook for dynamic location handling
 
-  // Function to load the appropriate Genesys script
+  // Initialize Genesys based on consent
   const loadGenesysScript = (deploymentId) => {
     if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
       (function (g, e, n, es, ys) {
