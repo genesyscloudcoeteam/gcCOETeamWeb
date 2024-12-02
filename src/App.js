@@ -66,7 +66,6 @@ const App = () => {
   }, [location]);
 
   return (
-    <Router>
     <div id="root">
       <Navbar />
         <main>
@@ -83,7 +82,6 @@ const App = () => {
         </main>
         <Footer />
       </div>
-    </Router>
   );
 };
 
