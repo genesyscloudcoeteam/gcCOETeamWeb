@@ -6,6 +6,13 @@ body {
     background-color: #F9F8F5; /* Secondary background */
     color: #000; /* Default text color for light backgrounds */
     line-height: 1.6;
+    height: 100%; /* Make the body take the full height of the viewport */
+    margin: 0;
+  }
+
+  /* Main content area */
+main {
+    flex: 1; /* Allow the main content to grow and take up available space */
   }
   
   /* Theme Colors */
@@ -15,6 +22,9 @@ body {
     --tertiary-color: #FF451A;
     --text-color-light: #FFF; /* White for dark backgrounds */
     --text-color-dark: #000; /* Black for light backgrounds */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it stretches to the full viewport height */
   }
   
   /* Navbar */
@@ -49,11 +59,12 @@ body {
   footer {
     text-align: center;
     padding: 15px;
-    background-color: var(--main-color);
-    color: var(--text-color-light);
+    background-color: var(--main-color); /* Match your theme color */
+    color: var(--text-color-light); /* White text for dark background */
     position: relative;
     bottom: 0;
     width: 100%;
+    position: relative;
   }
   
   /* Buttons */

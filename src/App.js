@@ -66,22 +66,24 @@ const App = () => {
   }, [location]);
 
   return (
-    <div>
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <Router basename="/gcCOETeamWeb">
+    <div id="root">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
