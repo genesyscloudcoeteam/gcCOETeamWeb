@@ -8,40 +8,52 @@ import Shop from "./components/Shop";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
-import Register from "./components/Register";
-import Login from "./components/Login";
 
 const App = () => {
   const location = useLocation();
 
-  // Function to initialize Genesys script
-  const initializeApp = () => {
-    console.log("Initializing Genesys script...");
+ // Function to initialize Genesys script
+const initializeApp = () => {
+  console.log("Initializing Genesys script...");
 
-    if (!document.querySelector('script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]')) {
-      (function (g, e, n, es, ys) {
-        g['_genesysJs'] = e;
-        g[e] = g[e] || function () {
-          (g[e].q = g[e].q || []).push(arguments);
-        };
-        g[e].t = 1 * new Date();
-        g[e].c = es;
-        ys = document.createElement('script');
-        ys.async = 1;
-        ys.src = n;
-        ys.charset = 'utf-8';
-        document.head.appendChild(ys);
-      })(window, 'Genesys', 'https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js', {
-        environment: 'prod-euw1',
-        deploymentId: 'e20c3572-d92f-4518-9b9d-0049083dc914'
-      });
-    } else {
-      console.log("Genesys script already loaded.");
-    }
-    Genesys("subscribe", "Journey.ready", function() {
-      console.log("Journey plugin is ready.")
+  // Check if the script is already loaded
+  if (!document.querySelector('script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]')) {
+    (function (g, e, n, es, ys) {
+      g['_genesysJs'] = e;
+      g[e] = g[e] || function () {
+        (g[e].q = g[e].q || []).push(arguments);
+      };
+      g[e].t = 1 * new Date();
+      g[e].c = es;
+      ys = document.createElement('script');
+      ys.async = 1;
+      ys.src = n;
+      ys.charset = 'utf-8';
+      document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js', {
+      environment: 'prod-euw1',
+      deploymentId: 'e20c3572-d92f-4518-9b9d-0049083dc914',
     });
-  };
+  } else {
+    console.log("Genesys script already loaded.");
+  }
+
+  // Wait for Genesys to be available
+  const waitForGenesys = setInterval(() => {
+    if (window.Genesys) {
+      clearInterval(waitForGenesys); // Stop checking once Genesys is available
+
+      console.log("Genesys script is loaded. Subscribing to events...");
+
+      // Subscribe to the "Journey.ready" event
+      Genesys("subscribe", "Journey.ready", function () {
+        console.log("Journey plugin is ready.");
+      });
+
+      // Other commands can also be issued here
+    }
+  }, 100); // Check every 100ms
+};
 
   // Initialize Genesys script when the app loads
   useEffect(() => {
@@ -56,11 +68,8 @@ const App = () => {
       "/shop": "Shop",
       "/cart": "Cart",
       "/checkout": "Checkout",
-      "/register": "Register",
-      "/login": "Login",
     };
 
-    // Handle dynamic title for product pages
     const currentTitle = location.pathname.startsWith("/product/")
       ? "Product Details"
       : titles[location.pathname] || "gcCOETeamWeb";
@@ -71,24 +80,21 @@ const App = () => {
   return (
     <div id="root">
       <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
-// Wrapper to include Router with a base path
 const AppWrapper = () => (
   <Router basename="/gcCOETeamWeb">
     <App />

@@ -3,74 +3,108 @@ body {
     font-family: 'Poppins', 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F9F8F5; /* Secondary background */
-    color: #000; /* Default text color for light backgrounds */
+    background-color: #F9F8F5;
+    /* Secondary background */
+    color: #000;
+    /* Default text color for light backgrounds */
     line-height: 1.6;
-    height: 100%; /* Make the body take the full height of the viewport */
+    height: 100%;
+    /* Make the body take the full height of the viewport */
     margin: 0;
-  }
+}
 
-  /* Main content area */
+/* Root flexbox layout */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Ensures full height */
+}
+
 main {
-    flex: 1; /* Allow the main content to grow and take up available space */
-  }
-  
-  /* Theme Colors */
-  :root {
+    flex: 1;
+    /* Allows the main content to grow */
+}
+
+/* Theme Colors */
+:root {
     --main-color: #152450;
     --secondary-color: #F9F8F5;
     --tertiary-color: #FF451A;
-    --text-color-light: #FFF; /* White for dark backgrounds */
-    --text-color-dark: #000; /* Black for light backgrounds */
+    --text-color-light: #FFF;
+    /* White for dark backgrounds */
+    --text-color-dark: #000;
+    /* Black for light backgrounds */
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure it stretches to the full viewport height */
-  }
-  
- /* Navbar container */
+    min-height: 100vh;
+    /* Ensure it stretches to the full viewport height */
+}
+
+/* Navbar container */
 nav {
     display: flex;
-    justify-content: space-between; /* Space between left and right content */
-    align-items: center; /* Vertically center items */
-    padding: 10px 20px; /* Add padding around the navbar */
-    background-color: var(--main-color); /* Use the main theme color */
-    color: var(--text-color-light); /* Use white text for dark background */
-  }
-  
-  /* Navbar links container */
-  nav ul {
+    justify-content: space-between;
+    /* Space between left and right content */
+    align-items: center;
+    /* Vertical centering */
+    padding: 10px 20px;
+    /* Adjust padding as needed */
+    background-color: var(--main-color);
+    /* Primary theme color */
+    color: var(--text-color-light);
+    /* White for text on dark background */
+}
+
+/* Navbar links */
+nav ul {
     list-style-type: none;
     display: flex;
-    gap: 20px; /* Add space between links */
+    gap: 20px;
+    /* Space between links */
     margin: 0;
     padding: 0;
-    align-items: center; /* Vertically center items */
-  }
-  
-  nav ul li a {
+}
+
+nav ul li a,
+nav ul li button {
     text-decoration: none;
     color: var(--text-color-light);
-    font-weight: 500;
-  }
-  
-  nav ul li a:hover {
-    color: var(--tertiary-color);
-  }
-  
-  /* Footer */
-  footer {
+    font-family: 'Poppins', sans-serif;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    /* No background for links */
+}
+
+nav ul li button {
+    background-color: var(--tertiary-color);
+    /* Button background */
+}
+
+nav ul li button:hover {
+    background-color: #e03f18;
+    /* Darker on hover */
+}
+
+/* Footer container */
+footer {
+    background-color: var(--main-color);
+    /* Primary theme color */
+    color: var(--text-color-light);
+    /* White text */
     text-align: center;
-    padding: 15px;
-    background-color: var(--main-color); /* Match your theme color */
-    color: var(--text-color-light); /* White text for dark background */
+    padding: 10px;
     position: relative;
     bottom: 0;
     width: 100%;
-    position: relative;
-  }
-  
-  /* Buttons */
-  button {
+}
+
+/* Buttons */
+button {
     background-color: var(--tertiary-color);
     color: var(--text-color-light);
     border: none;
@@ -79,47 +113,52 @@ nav {
     cursor: pointer;
     font-size: 16px;
     font-family: inherit;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #e03f18;
-  }
-  
-  /* Headings */
-  h1, h2, h3, h4, h5, h6 {
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
     color: var(--main-color);
     margin-top: 0;
-  }
-  
-  /* Links */
-  a {
+}
+
+/* Links */
+a {
     color: var(--main-color);
     text-decoration: none;
-  }
-  
-  a:hover {
+}
+
+a:hover {
     color: var(--tertiary-color);
-  }
-  
-  /* Cards */
-  .card {
+}
+
+/* Cards */
+.card {
     background-color: var(--secondary-color);
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
-    color: var(--main-color);
-  }
-  
-  .card p {
-    color: var(--text-color-dark);
-  }
+}
 
-  .modal {
+.card h3 {
+    color: var(--main-color);
+}
+
+.card p {
+    color: var(--text-color-dark);
+}
+
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -130,57 +169,65 @@ nav {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
- /* Modal container */
+}
+
+/* Modal container */
 .modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     width: 100%;
-    max-width: 400px; /* Limit width of the modal */
+    max-width: 400px;
+    /* Limit width of the modal */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-family: 'Poppins', sans-serif; /* Ensure font is inherited */
-  }
-  
-  /* Form styles */
-  form input {
+    font-family: 'Poppins', sans-serif;
+    /* Ensure font is inherited */
+}
+
+/* Form styles */
+form input {
     display: block;
-    width: 100%; /* Ensure input fits within modal */
-    max-width: 350px; /* Set max-width for input fields */
+    width: 100%;
+    /* Ensure input fits within modal */
+    max-width: 350px;
+    /* Set max-width for input fields */
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-family: inherit; /* Use app's default font */
+    font-family: inherit;
+    /* Use app's default font */
     font-size: 14px;
-    box-sizing: border-box; /* Include padding/border in width */
-  }
-  
-  /* Button styles */
-  form button {
-    background-color: #ff451a; /* Tertiary color */
+    box-sizing: border-box;
+    /* Include padding/border in width */
+}
+
+/* Button styles */
+form button {
+    background-color: #ff451a;
+    /* Tertiary color */
     color: #fff;
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
-    font-family: inherit; /* Use app's default font */
+    font-family: inherit;
+    /* Use app's default font */
     font-size: 14px;
     margin-right: 10px;
-  }
-  
-  form button:hover {
-    background-color: #e03f18; /* Slightly darker for hover effect */
-  }
-  
-  /* Cancel button (secondary style) */
-  form button[type="button"] {
+}
+
+form button:hover {
+    background-color: #e03f18;
+    /* Slightly darker for hover effect */
+}
+
+/* Cancel button (secondary style) */
+form button[type="button"] {
     background-color: #ccc;
     color: #000;
-  }
-  
-  form button[type="button"]:hover {
+}
+
+form button[type="button"]:hover {
     background-color: #bbb;
-  }
-  
+}

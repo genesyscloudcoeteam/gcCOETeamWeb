@@ -18,23 +18,45 @@ const RegisterModal = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { password, confirmPassword } = formData;
 
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
 
-    // Placeholder for AWS Lambda integration logic
+    // Execute Genesys Journey.formsTrack for successful form submission
+    if (window.Genesys) {
+      Genesys("command", "Journey.formsTrack", {
+        selector: "#registration-form",
+        formName: "User Registration",
+        captureFormDataOnAbandon: true,
+        customAttributes: { isRegistrationSubmitted: true },
+      });
+    }
+
     console.log("Registration Data:", formData);
     onClose(); // Close modal after successful submission
+  };
+
+  const handleCancel = () => {
+    // Execute Genesys Journey.formsTrack for form cancellation
+    if (window.Genesys) {
+      Genesys("command", "Journey.formsTrack", {
+        selector: "#registration-form",
+        formName: "User Registration",
+        captureFormDataOnAbandon: true,
+        customAttributes: { isRegistrationSubmitted: false },
+      });
+    }
+
+    onClose(); // Close modal
   };
 
   return (
     <div className="modal">
       <div className="modal-content">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
+        <form id="registration-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="firstName"
@@ -77,7 +99,7 @@ const RegisterModal = ({ onClose }) => {
           />
           {error && <p className="error">{error}</p>}
           <button type="submit">Register</button>
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </form>

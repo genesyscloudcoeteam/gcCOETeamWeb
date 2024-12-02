@@ -14,16 +14,42 @@ const LoginModal = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Placeholder for AWS Lambda integration logic
+    // Execute Genesys Journey.formsTrack for successful form submission
+    if (window.Genesys) {
+      Genesys("command", "Journey.formsTrack", {
+        selector: "#login-form",
+        formName: "User Login",
+        captureFormDataOnAbandon: true,
+        customAttributes: { isLoginSubmitted: true },
+        traitsMapper: [
+          { fieldName: "email", traitName: "email" },
+        ],
+      });
+    }
+
     console.log("Login Data:", formData);
     onClose(); // Close modal after successful submission
+  };
+
+  const handleCancel = () => {
+    // Execute Genesys Journey.formsTrack for form cancellation
+    if (window.Genesys) {
+      Genesys("command", "Journey.formsTrack", {
+        selector: "#login-form",
+        formName: "User Login",
+        captureFormDataOnAbandon: true,
+        customAttributes: { isLoginSubmitted: false },
+      });
+    }
+
+    onClose(); // Close modal
   };
 
   return (
     <div className="modal">
       <div className="modal-content">
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form id="login-form" onSubmit={handleSubmit}>
           <input
             type="email"
             name="email"
@@ -41,7 +67,7 @@ const LoginModal = ({ onClose }) => {
             required
           />
           <button type="submit">Login</button>
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </form>
