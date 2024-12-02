@@ -1,34 +1,22 @@
 /* global Genesys */
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import RegisterModal from "./RegisterModal";
-import LoginModal from "./LoginModal";
 
-const Navbar = () => {
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
+const Navbar = ({ onRegisterClick, onLoginClick }) => {
   return (
-    <>
-      <nav>
-        <h1>gcCOETeamWeb</h1>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/shop">Shop</Link></li>
-          <li><button onClick={() => setShowRegisterModal(true)}>Register</button></li>
-          <li><button onClick={() => setShowLoginModal(true)}>Login</button></li>
-        </ul>
-      </nav>
-      {/* Register Modal */}
-      {showRegisterModal && (
-        <RegisterModal onClose={() => setShowRegisterModal(false)} />
-      )}
-      {/* Login Modal */}
-      {showLoginModal && (
-        <LoginModal onClose={() => setShowLoginModal(false)} />
-      )}
-    </>
+    <nav>
+      <h1>Demo Retail Store</h1>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/shop">Shop</a></li>
+        <li>
+          <button onClick={onRegisterClick}>Register</button>
+        </li>
+        <li>
+          <button onClick={onLoginClick}>Login</button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

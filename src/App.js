@@ -10,12 +10,14 @@ import Product from "./components/Product";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import CookieConsent from "./components/CookieConsent";
-import RegisterModal from "./components/RegisterModal"; // Import RegisterModal
-import LoginModal from "./components/LoginModal"; // Import LoginModal
+import RegisterModal from "./components/RegisterModal";
+import LoginModal from "./components/LoginModal";
 
 const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
-  const location = useLocation(); // Use the hook for dynamic location handling
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const location = useLocation();
 
   // Initialize Genesys based on consent
   const loadGenesysScript = (deploymentId) => {
@@ -79,7 +81,10 @@ const App = () => {
 
   return (
     <div id="root">
-      <Navbar />
+      <Navbar
+        onRegisterClick={() => setIsRegisterModalOpen(true)}
+        onLoginClick={() => setIsLoginModalOpen(true)}
+      />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -92,9 +97,18 @@ const App = () => {
       </main>
       <Footer />
       <CookieConsent onConsent={setCookieConsent} />
-      {/* Pass cookieConsent to modals */}
-      <RegisterModal cookieConsent={cookieConsent} />
-      <LoginModal cookieConsent={cookieConsent} />
+      {isRegisterModalOpen && (
+        <RegisterModal
+          cookieConsent={cookieConsent}
+          onClose={() => setIsRegisterModalOpen(false)}
+        />
+      )}
+      {isLoginModalOpen && (
+        <LoginModal
+          cookieConsent={cookieConsent}
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
