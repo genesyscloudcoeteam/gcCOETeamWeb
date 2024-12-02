@@ -10,6 +10,7 @@ import Shop from "./components/Shop";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import CookieConsent from "./components/CookieConsent"; // Import the cookie consent component
 
 const App = () => {
   const location = useLocation();
@@ -93,6 +94,7 @@ const initializeApp = () => {
         </Routes>
       </main>
       <Footer />
+      <CookieConsent /> {/* Add the cookie consent banner */}
     </div>
   );
 };
