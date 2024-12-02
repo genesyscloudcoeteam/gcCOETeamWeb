@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState } from "react";
 
-const LoginModal = ({ onClose }) => {
+const LoginModal = ({ cookieConsent, onClose }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,8 +15,7 @@ const LoginModal = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Execute Genesys Journey.formsTrack for successful form submission
-    if (window.Genesys) {
+    if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
         selector: "#login-form",
         formName: "User Login",
@@ -26,21 +25,24 @@ const LoginModal = ({ onClose }) => {
           { fieldName: "email", traitName: "email" },
         ],
       });
+      console.log("Genesys: User Login Submitted");
     }
 
-    console.log("Login Data:", formData);
     onClose(); // Close modal after successful submission
   };
 
   const handleCancel = () => {
-    // Execute Genesys Journey.formsTrack for form cancellation
-    if (window.Genesys) {
+    if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
         selector: "#login-form",
         formName: "User Login",
         captureFormDataOnAbandon: true,
         customAttributes: { isLoginSubmitted: false },
+        traitsMapper: [
+          { fieldName: "email", traitName: "email" },
+        ],
       });
+      console.log("Genesys: User Login Cancelled");
     }
 
     onClose(); // Close modal

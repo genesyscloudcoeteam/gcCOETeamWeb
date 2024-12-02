@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState } from "react";
 
-const RegisterModal = ({ onClose }) => {
+const RegisterModal = ({ cookieConsent, onClose }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -10,44 +10,36 @@ const RegisterModal = ({ onClose }) => {
     confirmPassword: "",
   });
 
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
+      console.error("Passwords do not match!");
       return;
     }
 
-    // Execute Genesys Journey.formsTrack for successful form submission
-    if (window.Genesys) {
+    if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
         selector: "#registration-form",
         formName: "User Registration",
         captureFormDataOnAbandon: true,
         customAttributes: { isRegistrationSubmitted: true },
       });
+      console.log("Genesys: User Registration Submitted");
     }
 
-    console.log("Registration Data:", formData);
-    onClose(); // Close modal after successful submission
+    onClose(); // Close modal after submission
   };
 
   const handleCancel = () => {
-    // Execute Genesys Journey.formsTrack for form cancellation
-    if (window.Genesys) {
+    if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
         selector: "#registration-form",
         formName: "User Registration",
         captureFormDataOnAbandon: true,
         customAttributes: { isRegistrationSubmitted: false },
       });
+      console.log("Genesys: User Registration Cancelled");
     }
 
     onClose(); // Close modal
@@ -63,7 +55,7 @@ const RegisterModal = ({ onClose }) => {
             name="firstName"
             placeholder="First Name"
             value={formData.firstName}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
             required
           />
           <input
@@ -71,7 +63,7 @@ const RegisterModal = ({ onClose }) => {
             name="lastName"
             placeholder="Last Name"
             value={formData.lastName}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
             required
           />
           <input
@@ -79,7 +71,7 @@ const RegisterModal = ({ onClose }) => {
             name="email"
             placeholder="Email Address"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
           />
           <input
@@ -87,7 +79,7 @@ const RegisterModal = ({ onClose }) => {
             name="password"
             placeholder="Password"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             required
           />
           <input
@@ -95,10 +87,9 @@ const RegisterModal = ({ onClose }) => {
             name="confirmPassword"
             placeholder="Confirm Password"
             value={formData.confirmPassword}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             required
           />
-          {error && <p className="error">{error}</p>}
           <button type="submit">Register</button>
           <button type="button" onClick={handleCancel}>
             Cancel

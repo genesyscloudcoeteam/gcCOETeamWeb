@@ -1,7 +1,6 @@
 /* global Genesys */
-
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -10,58 +9,53 @@ import Shop from "./components/Shop";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
-import CookieConsent from "./components/CookieConsent"; // Import the cookie consent component
+import CookieConsent from "./components/CookieConsent";
 
 const App = () => {
-  const location = useLocation();
+  const [cookieConsent, setCookieConsent] = useState(null);
 
- // Function to initialize Genesys script
-const initializeApp = () => {
-  console.log("Initializing Genesys script...");
-
-  // Check if the script is already loaded
-  if (!document.querySelector('script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]')) {
-    (function (g, e, n, es, ys) {
-      g['_genesysJs'] = e;
-      g[e] = g[e] || function () {
-        (g[e].q = g[e].q || []).push(arguments);
-      };
-      g[e].t = 1 * new Date();
-      g[e].c = es;
-      ys = document.createElement('script');
-      ys.async = 1;
-      ys.src = n;
-      ys.charset = 'utf-8';
-      document.head.appendChild(ys);
-    })(window, 'Genesys', 'https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js', {
-      environment: 'prod-euw1',
-      deploymentId: 'e20c3572-d92f-4518-9b9d-0049083dc914',
-    });
-  } else {
-    console.log("Genesys script already loaded.");
-  }
-
-  // Wait for Genesys to be available
-  const waitForGenesys = setInterval(() => {
-    if (window.Genesys) {
-      clearInterval(waitForGenesys); // Stop checking once Genesys is available
-
-      console.log("Genesys script is loaded. Subscribing to events...");
-
-      // Subscribe to the "Journey.ready" event
-      Genesys("subscribe", "Journey.ready", function () {
-        console.log("Journey plugin is ready.");
+  // Function to load the appropriate Genesys script
+  const loadGenesysScript = (deploymentId) => {
+    if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
+      (function (g, e, n, es, ys) {
+        g['_genesysJs'] = e;
+        g[e] = g[e] || function () {
+          (g[e].q = g[e].q || []).push(arguments);
+        };
+        g[e].t = 1 * new Date();
+        g[e].c = es;
+        ys = document.createElement('script');
+        ys.async = 1;
+        ys.src = n;
+        ys.charset = 'utf-8';
+        document.head.appendChild(ys);
+      })(window, 'Genesys', 'https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js', {
+        environment: 'prod-euw1',
+        deploymentId: deploymentId,
       });
-
-      // Other commands can also be issued here
     }
-  }, 100); // Check every 100ms
-};
+  };
 
-  // Initialize Genesys script when the app loads
+  // Initialize Genesys based on consent
   useEffect(() => {
-    initializeApp();
-  }, []);
+    if (cookieConsent === "accept") {
+      console.log("User accepted cookies. Loading full Genesys script.");
+      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+
+      // Subscribe to Journey.ready event
+      const waitForGenesys = setInterval(() => {
+        if (window.Genesys) {
+          clearInterval(waitForGenesys);
+          Genesys("subscribe", "Journey.ready", function () {
+            console.log("Journey plugin is ready.");
+          });
+        }
+      }, 100);
+    } else if (cookieConsent === "decline") {
+      console.log("User declined cookies. Loading alternative Genesys script.");
+      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+    }
+  }, [cookieConsent]);
 
   // Update the page title dynamically based on the route
   useEffect(() => {
@@ -94,7 +88,10 @@ const initializeApp = () => {
         </Routes>
       </main>
       <Footer />
-      <CookieConsent /> {/* Add the cookie consent banner */}
+      <CookieConsent onConsent={setCookieConsent} />
+      {/* Pass cookieConsent to modals */}
+      <RegisterModal cookieConsent={cookieConsent} />
+      <LoginModal cookieConsent={cookieConsent} />
     </div>
   );
 };
