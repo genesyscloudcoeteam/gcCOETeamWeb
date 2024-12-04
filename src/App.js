@@ -80,6 +80,7 @@ const App = () => {
   }, [location]);
 
   return (
+    <Router basename="/gcCOETeamWeb">
     <div id="root">
       <Navbar
         onRegisterClick={() => setIsRegisterModalOpen(true)}
@@ -110,13 +111,8 @@ const App = () => {
         />
       )}
     </div>
+    </Router>
   );
 };
 
-const AppWrapper = () => (
-  <Router basename="/gcCOETeamWeb">
-    <App />
-  </Router>
-);
-
-export default AppWrapper;
+export default App;
