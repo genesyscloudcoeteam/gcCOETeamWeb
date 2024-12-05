@@ -1,7 +1,7 @@
 /* global Genesys */
-/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
+import { executeAcCommand } from "./utils/acHelper";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -1,7 +1,7 @@
 /* global Genesys */
-/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
+import { executeAcCommand } from "./utils/acHelper";
 
 const LoginModal = ({ cookieConsent, onClose }) => {
   const [email, setEmail] = useState("");
@@ -50,7 +50,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           //  ],
           //});
 
-          ac('record', 'userLogin', {
+          executeAcCommand('record', 'userLogin', {
               isLoginFormSubmitted: true,
               email: userEmail,
               givenName: firstName,

@@ -1,7 +1,7 @@
 /* global Genesys */
-/* global ac */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { executeAcCommand } from "./utils/acHelper";
 
 const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
   const [isGenesysReady, setIsGenesysReady] = useState(false);

@@ -1,7 +1,7 @@
 /* global Genesys */
-/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
+import { executeAcCommand } from "./utils/acHelper";
 
 const RegisterModal = ({ cookieConsent, onClose }) => {
   const [formData, setFormData] = useState({
@@ -56,7 +56,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       //}
 
       if (cookieConsent === "accept" && window.ac) {
-        ac('forms:track', '#registration-form', 
+        executeAcCommand('forms:track', '#registration-form', 
           {
             captureFormDataOnAbandon: false,
             captureFormDataOnSubmit: false,
@@ -86,7 +86,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
         //    isRegistrationSubmitted: false,
         //  },
 
-        ac('forms:track', '#registration-form', 
+        executeAcCommand('forms:track', '#registration-form', 
           {
             captureFormDataOnAbandon: false,
             captureFormDataOnSubmit: false,
@@ -117,7 +117,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       //    isRegistrationSubmitted: false,
       //  },
       //});
-      ac('forms:track', '#registration-form', 
+      executeAcCommand('forms:track', '#registration-form', 
         {
           captureFormDataOnAbandon: false,
           captureFormDataOnSubmit: false,

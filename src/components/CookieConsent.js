@@ -1,6 +1,6 @@
 /* global Genesys */
-/* global ac */
 import React, { useState, useEffect } from "react";
+import { executeAcCommand } from "./utils/acHelper";
 
 const CookieConsent = ({ onConsent }) => {
   const [showBanner, setShowBanner] = useState(false);
