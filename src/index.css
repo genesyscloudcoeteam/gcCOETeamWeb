@@ -4,15 +4,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: #F9F8F5;
-    /* Secondary background */
     color: #000;
-    /* Default text color for light backgrounds */
     line-height: 1.6;
     width: 100%;
     height: 100%;
-    /* Make the body take the full height of the viewport */
-    overflow-x: hidden; /* Prevent horizontal overflow */
-    overflow-y: hidden; /* Prevent horizontal overflow */
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 /* Root flexbox layout */
@@ -20,24 +17,23 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /* Ensures full height */
 }
 
 /* Main content fills available space */
 main {
-    flex: 1; /* Allow main content to grow and push footer to the bottom */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: flex-start; /* Start content at the top */
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
-  }
+}
 
-  /* Prevent unnecessary horizontal scrolling */
+/* Prevent unnecessary horizontal scrolling */
 .container {
     max-width: 100%;
     overflow-x: hidden;
-  }
+}
 
 /* Theme Colors */
 :root {
@@ -45,70 +41,68 @@ main {
     --secondary-color: #F9F8F5;
     --tertiary-color: #FF451A;
     --text-color-light: #FFF;
-    /* White for dark backgrounds */
     --text-color-dark: #000;
-    /* Black for light backgrounds */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    /* Ensure it stretches to the full viewport height */
 }
 
 /* Navbar container */
 nav {
     display: flex;
     justify-content: space-between;
-    /* Space between left and right content */
     align-items: center;
-    /* Vertical centering */
-    padding: 10px 20px;
-    /* Adjust padding as needed */
+    padding: 1em 2em;
     background-color: var(--main-color);
-    /* Primary theme color */
     color: var(--text-color-light);
-    /* White for text on dark background */
 }
 
-/* Navbar links */
-nav ul {
-    list-style-type: none;
+/* Navbar links aligned to the left */
+.navbar-links {
     display: flex;
     gap: 20px;
-    /* Space between links */
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-nav ul li a,
-nav ul li button {
+/* Links styling */
+.navbar-links li a {
     text-decoration: none;
     color: var(--text-color-light);
     font-family: 'Poppins', sans-serif;
     padding: 5px 10px;
     font-size: 14px;
     border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    background: none;
-    /* No background for links */
 }
 
-nav ul li button {
+.navbar-links li a:hover {
+    color: #e03f18; /* Slightly darker hover effect */
+}
+
+/* Navbar buttons aligned to the right */
+.navbar-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar-buttons button {
     background-color: var(--tertiary-color);
-    /* Button background */
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
 }
 
-nav ul li button:hover {
+.navbar-buttons button:hover {
     background-color: #e03f18;
-    /* Darker on hover */
+    color: var(--text-color-dark); /* Dark text on hover */
 }
 
 /* Footer container */
 footer {
     background-color: var(--main-color);
-    /* Primary theme color */
     color: var(--text-color-light);
-    /* White text */
     text-align: center;
     padding: 10px;
     position: relative;
@@ -191,48 +185,39 @@ a:hover {
     border-radius: 8px;
     width: 100%;
     max-width: 400px;
-    /* Limit width of the modal */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     font-family: 'Poppins', sans-serif;
-    /* Ensure font is inherited */
 }
 
 /* Form styles */
 form input {
     display: block;
     width: 100%;
-    /* Ensure input fits within modal */
     max-width: 350px;
-    /* Set max-width for input fields */
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-family: inherit;
-    /* Use app's default font */
     font-size: 14px;
     box-sizing: border-box;
-    /* Include padding/border in width */
 }
 
 /* Button styles */
 form button {
     background-color: #ff451a;
-    /* Tertiary color */
     color: #fff;
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
     font-family: inherit;
-    /* Use app's default font */
     font-size: 14px;
     margin-right: 10px;
 }
 
 form button:hover {
     background-color: #e03f18;
-    /* Slightly darker for hover effect */
 }
 
 /* Cancel button (secondary style) */

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ onRegisterClick, onLoginClick }) => {
   return (
-    <nav>
-      <ul>
+    <nav className="navbar">
+      <ul className="navbar-links">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -21,13 +21,11 @@ const Navbar = ({ onRegisterClick, onLoginClick }) => {
         <li>
           <Link to="/checkout">Checkout</Link>
         </li>
-        <li>
-          <button onClick={onRegisterClick}>Register</button>
-        </li>
-        <li>
-          <button onClick={onLoginClick}>Login</button>
-        </li>
       </ul>
+      <div className="navbar-buttons">
+        <button onClick={onRegisterClick}>Register</button>
+        <button onClick={onLoginClick}>Login</button>
+      </div>
     </nav>
   );
 };
