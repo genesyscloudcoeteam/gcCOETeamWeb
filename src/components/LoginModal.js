@@ -1,4 +1,5 @@
 /* global Genesys */
+/* global GenesysTrackingScript */
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -30,24 +31,36 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       if (cookieConsent === "accept") {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
-        if (window.Genesys) {
+        if (window.GenesysTrackingScript) {
           console.log("Genesys object is available. Recording login event.");
 
-          Genesys("command", "Journey.record", {
-            eventName: "userLogin",
-            customAttributes: {
+          //Genesys("command", "Journey.record", {
+          //  eventName: "userLogin",
+          //  customAttributes: {
+          //    isLoginFormSubmitted: true,
+          //    email: userEmail,
+          //    givenName: firstName,
+          //    familyName: lastName,
+          //    crmId: crmId,
+          //  },
+          //  traitsMapper: [
+          //    { fieldName: "email"},
+          //    { fieldName: "givenName"},
+          //    { fieldName: "familyName"},
+          //  ],
+          //});
+
+          ac('record', 'userLogin', {
               isLoginFormSubmitted: true,
               email: userEmail,
               givenName: firstName,
               familyName: lastName,
               crmId: crmId,
-            },
-            traitsMapper: [
-              { fieldName: "email"},
-              { fieldName: "givenName"},
-              { fieldName: "familyName"},
-            ],
-          });
+             //},
+             //   [
+             //     { fieldName: "email", fieldName: "givenName", fieldName: "familyName"}
+             //   ],
+              });
 
           console.log("Genesys: User login event recorded.");
          

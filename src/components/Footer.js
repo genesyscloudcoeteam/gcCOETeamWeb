@@ -1,4 +1,5 @@
 /* global Genesys */
+/* global GenesysTrackingScript */
 import React from "react";
 
 const Footer = () => {

@@ -1,4 +1,5 @@
 /* global Genesys */
+/* global GenesysTrackingScript */
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -49,19 +50,43 @@ const App = () => {
     }
   };
 
+  const loadGenesysTrackingSnippet = () => {
+    if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
+      (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
+        (a[o].q=a[o].q||[]).push(arguments)},a[o].l=1*new Date();u=t.createElement(c),
+        d=t.getElementsByTagName(c)[0];u.async=1;u.src=l;u.charset='utf-8';d.parentNode.insertBefore(u,d)
+        })(window, document, 'GenesysTrackingScript', 'https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js', 'ac');
+        ac('init', '3b03b67a-2349-4a03-8b28-c8ac5c26c49a', { region: 'euw1' });
+        ac('load', 'autotrackUrlChange');
+    }
+  };
+
+
   // Initialize Genesys Script on Consent
   useEffect(() => {
     if (cookieConsent === "accept") {
-      console.log("User accepted cookies. Loading full Genesys script.");
-      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+      console.log("User accepted cookies. Loading Legacy Tracking Snippet and Messenger Widget.");
+      //loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+      loadGenesysTrackingSnippet();
+      
+      const waitForGenesysTrackingScript = setInterval(() => {
+        if (window.GenesysTrackingScript) {
+          clearInterval(waitForGenesysTrackingScript);
+          console.log("Genesys tracking script loaded.");  
+        }
+      }, 100);
+
+
+      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
       // Subscribe to Journey.ready event
       const waitForGenesys = setInterval(() => {
         if (window.Genesys) {
           clearInterval(waitForGenesys);
-          Genesys("subscribe", "Journey.ready", function () {
-            console.log("Journey & Launcher plugin is ready.");
-          });
+
+          //Genesys("subscribe", "Journey.ready", function () {
+          //  console.log("Journey & Launcher plugin is ready.");
+          //});
 
           Genesys("subscribe", "Toaster.ready", () => {
             Genesys(
