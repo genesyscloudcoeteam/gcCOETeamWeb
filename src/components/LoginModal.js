@@ -31,25 +31,25 @@ const LoginModal = ({ cookieConsent, onClose }) => {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
         if (window.Genesys) {
-          console.log("Genesys object is available. Recording login event.");
+          //console.log("Genesys object is available. Recording login event.");
 
-          Genesys("command", "Journey.record", {
-            eventName: "userLogin",
-            customAttributes: {
-              isLoginFormSubmitted: true,
-              email: userEmail,
-              givenName: firstName,
-              familyName: lastName,
-              crmId: crmId,
-            },
-            traitsMapper: [
-              { fieldName: "email"},
-              { fieldName: "givenName"},
-              { fieldName: "familyName"},
-            ],
-          });
+          //Genesys("command", "Journey.record", {
+          //  eventName: "userLogin",
+          //  customAttributes: {
+          //    isLoginFormSubmitted: true,
+          //    email: userEmail,
+          //    givenName: firstName,
+          //    familyName: lastName,
+          //    crmId: crmId,
+          //  },
+          //  traitsMapper: [
+          //    { fieldName: "email"},
+          //    { fieldName: "givenName"},
+          //    { fieldName: "familyName"},
+          //  ],
+          //});
 
-          console.log("Genesys: User login event recorded.");
+          //console.log("Genesys: User login event recorded.");
 
           console.log("Login form exists:", document.querySelector("#login-form"));
           console.log("Genesys is ready:", !!window.Genesys);
@@ -58,6 +58,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
             selector: "#login-form",
             formName: "login",
             captureFormDataOnAbandon: false,
+            captureFormDataOnSubmit: true,
             customAttributes: {
               isLoginFormSubmitted: true,
               email: email,
@@ -102,6 +103,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
         selector: "#login-form",
         formName: "login",
         captureFormDataOnAbandon: false,
+        captureFormDataOnSubmit: false,
         customAttributes: {
           isLoginFormSubmitted: false,
         },
@@ -120,7 +122,6 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           <input
             type="email"
             placeholder="Email Address"
-            label="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -128,7 +129,6 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           <input
             type="password"
             placeholder="Password"
-            label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

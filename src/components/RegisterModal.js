@@ -46,7 +46,10 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
           selector: "#registration-form",
           formName: "registration",
           captureFormDataOnAbandon: false,
-          customAttributes: { isRegistrationSubmitted: true },
+          captureFormDataOnSubmit: false,
+          customAttributes: { 
+            isRegistrationSubmitted: true, 
+          },
         });
         console.log("Genesys: User Registration Submitted");
       }
@@ -64,6 +67,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
           selector: "#registration-form",
           formName: "registration",
           captureFormDataOnAbandon: false,
+          captureFormDataOnSubmit: false,
           customAttributes: {
             isLoginFormSubmitted: false,
           },
@@ -86,6 +90,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
         selector: "#registration-form",
         formName: "registration",
         captureFormDataOnAbandon: false,
+        captureFormDataOnSubmit: false,
         customAttributes: {
           isLoginFormSubmitted: false,
         },
@@ -105,7 +110,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="text"
             name="firstName"
             placeholder="First Name"
-            label="First Name"
             value={formData.firstName}
             onChange={(e) =>
               setFormData({ ...formData, firstName: e.target.value })
@@ -116,7 +120,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="text"
             name="lastName"
             placeholder="Last Name"
-            label="Last Name"
             value={formData.lastName}
             onChange={(e) =>
               setFormData({ ...formData, lastName: e.target.value })
@@ -127,7 +130,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="email"
             name="email"
             placeholder="Email Address"
-            label="Email Address"
             value={formData.email}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
@@ -138,7 +140,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="password"
             name="password"
             placeholder="Password"
-            label="Password"
             value={formData.password}
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
@@ -149,7 +150,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            label="Confirm Password"
             value={formData.confirmPassword}
             onChange={(e) =>
               setFormData({ ...formData, confirmPassword: e.target.value })
