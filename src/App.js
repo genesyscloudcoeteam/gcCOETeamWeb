@@ -17,31 +17,31 @@ const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const location = useLocation();
+  const location = useLocation(); // Ensures useLocation is inside a valid Router context
 
-  // Initialize Genesys based on consent
+  // Genesys Script Initialization
   const loadGenesysScript = (deploymentId) => {
     if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
       (function (g, e, n, es, ys) {
-        g['_genesysJs'] = e;
+        g["_genesysJs"] = e;
         g[e] = g[e] || function () {
           (g[e].q = g[e].q || []).push(arguments);
         };
         g[e].t = 1 * new Date();
         g[e].c = es;
-        ys = document.createElement('script');
+        ys = document.createElement("script");
         ys.async = 1;
         ys.src = n;
-        ys.charset = 'utf-8';
+        ys.charset = "utf-8";
         document.head.appendChild(ys);
-      })(window, 'Genesys', 'https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js', {
-        environment: 'prod-euw1',
+      })(window, "Genesys", "https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js", {
+        environment: "prod-euw1",
         deploymentId: deploymentId,
       });
     }
   };
 
-  // Initialize Genesys based on consent
+  // Initialize Genesys Script on Consent
   useEffect(() => {
     if (cookieConsent === "accept") {
       console.log("User accepted cookies. Loading full Genesys script.");
@@ -62,7 +62,7 @@ const App = () => {
     }
   }, [cookieConsent]);
 
-  // Update the page title dynamically based on the route
+  // Dynamically Update Page Titles Based on Routes
   useEffect(() => {
     const titles = {
       "/": "Home",
