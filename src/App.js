@@ -56,6 +56,7 @@ const App = () => {
     script.async = true;
     script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";
     script.charset = "utf-8";
+    console.log("Loading Journey SDK script.");
 
     script.onload = () => {
       console.log("Journey SDK script loaded. Initializing AC.");
@@ -63,6 +64,7 @@ const App = () => {
         console.log("Checking Genesys AC availability...");
 
         if (window.ac) {
+          clearInterval(waitForAC);
           window.ac("init", "3b03b67a-2349-4a03-8b28-c8ac5c26c49a", { region: "euw1" });
           window.ac("load", "autotrackUrlChange");
           console.log("AC initialized with autotrackUrlChange.");
