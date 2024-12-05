@@ -44,8 +44,8 @@ const LoginModal = ({ cookieConsent, onClose }) => {
             },
             traitsMapper: [
               { fieldName: "email", traitname: "email" },
-              { fieldName: "firstName", traitname: "givenName" },
-              { fieldName: "lastName", traitname: "familyName" },
+              { fieldName: "givenName", traitname: "givenName" },
+              { fieldName: "familyName", traitname: "familyName" },
             ],
           });
 
@@ -64,8 +64,8 @@ const LoginModal = ({ cookieConsent, onClose }) => {
             },
             traitsMapper: [
               { fieldName: "email", traitname: "email" },
-              { fieldName: "firstName", traitname: "givenName" },
-              { fieldName: "lastName", traitname: "familyName" },  
+              { fieldName: "givenName", traitname: "givenName" },
+              { fieldName: "familyName", traitname: "familyName" },  
             ],
           });
           console.log("Genesys: User login form recorded.");
