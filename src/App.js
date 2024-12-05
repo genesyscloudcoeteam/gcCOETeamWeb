@@ -107,10 +107,27 @@ const App = () => {
       // Load the Genesys script
       loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
+      // Subscribe to Genesys events
       const waitForGenesys = setInterval(() => {
         if (window.Genesys) {
           clearInterval(waitForGenesys);
-          console.log("Genesys script loaded for decline logic.");
+          Genesys("subscribe", "Toaster.ready", () => {
+            Genesys(
+              "command",
+              "Toaster.open",
+              {
+                title: "Welcome from The Genesys Cloud COE Team",
+                body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
+                buttons: {
+                  type: "binary",
+                  primary: "Get Support",
+                  secondary: "Maybe Later",
+                },
+              },
+              () => console.log("Toaster is opened."),
+              (error) => console.error("Error running Toaster.open command:", error)
+            );
+          });
         }
       }, 100);
     }
