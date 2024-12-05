@@ -27,29 +27,46 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       sessionStorage.setItem("crmId", crmId);
 
       // Genesys logic: tracking the login event
-      if (cookieConsent === "accept" && window.Genesys) {
-        Genesys("command", "Journey.record", {
-          eventName: "UserLogin",
-          customAttributes: {
-            email: userEmail,
-            givenName: firstName,
-            familyName: lastName,
-            crmId: crmId,
-          },
-          traitsMapper: [
-            {"fieldName": "email"},
-            {"fieldName": "givenName"},
-            {"fieldName": "familyName"},
-            {"fieldName": "crmId"}
+      if (cookieConsent === "accept") {
+        console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
-          ],
-        });
-        console.log("Genesys: User login recorded");
+        if (window.Genesys) {
+          console.log("Genesys object is available. Recording login event.");
+
+          Genesys("command", "Journey.record", {
+            eventName: "UserLogin",
+            customAttributes: {
+              email: userEmail,
+              givenName: firstName,
+              familyName: lastName,
+              crmId: crmId,
+            },
+            traitsMapper: [
+              { fieldName: "email" },
+              { fieldName: "givenName" },
+              { fieldName: "familyName" },
+              { fieldName: "crmId" },
+            ],
+          });
+
+          console.log("Genesys: User login recorded.");
+        } else {
+          console.error("Genesys object is not available. Ensure Genesys script is loaded.");
+        }
+      } else {
+        console.warn("Cookie consent is not accepted. Genesys logic skipped.");
       }
+    
 
-      if (cookieConsent === "accept" && window.Genesys) {
+      // Genesys logic: tracking the login event
+      if (cookieConsent === "accept") {
+        console.log("Cookie consent accepted. Proceeding with Genesys logic.");
+
+        if (window.Genesys) {
+          console.log("Genesys object is available. Recording login event.");
+
         Genesys("command", "Journey.formsTrack", {
-          selector: "#login-form",
+          selector: "login-form",
           formName: "User Login",
           captureFormDataOnAbandon: true,
           customAttributes: {
@@ -59,14 +76,19 @@ const LoginModal = ({ cookieConsent, onClose }) => {
             crmId: crmId,
           },
           traitsMapper: [
-            {"fieldName": "email"},
-            {"fieldName": "givenName"},
-            {"fieldName": "familyName"},
-            {"fieldName": "crmId"}
+            { "fieldName": "email" },
+            { "fieldName": "givenName" },
+            { "fieldName": "familyName" },
+            { "fieldName": "crmId" }
 
           ],
         });
-        console.log("Genesys: User Login Submitted");
+        console.log("Genesys: User login form recorded.");
+        } else {
+          console.error("Genesys object is not available. Ensure Genesys script is loaded.");
+        }
+      } else {
+        console.warn("Cookie consent is not accepted. Genesys logic skipped.");
       }
 
       alert(message); // Notify user of success
@@ -84,14 +106,14 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "#login-form",
+        selector: "login-form",
         formName: "User Login",
         captureFormDataOnAbandon: true,
         customAttributes: {
           email: email
         },
         traitsMapper: [
-          {"fieldName": "email"}
+          { "fieldName": "email" }
         ],
       });
       console.log("Genesys: User Login Cancelled");
@@ -105,7 +127,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       <div className="modal-content">
         <h2>Login</h2>
         <form id="login-form" onSubmit={handleSubmit}>
-        <input
+          <input
             type="email"
             placeholder="Email Address"
             value={email}

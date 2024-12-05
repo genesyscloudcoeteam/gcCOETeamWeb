@@ -23,16 +23,6 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
     setLoading(true);
 
-    if (cookieConsent === "accept" && window.Genesys) {
-      Genesys("command", "Journey.formsTrack", {
-        selector: "#registration-form",
-        formName: "User Registration",
-        captureFormDataOnAbandon: true,
-        customAttributes: { isRegistrationSubmitted: true },
-      });
-      console.log("Genesys: User Registration Submitted");
-    }
-
     try {
       // Call the registration API (via Lambda)
       const response = await axios.post(
@@ -47,10 +37,32 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
       // Notify user of success and close modal
       alert(response.data.message);
+      
+      if (cookieConsent === "accept" && window.Genesys) {
+        Genesys("command", "Journey.formsTrack", {
+          selector: "#registration-form",
+          formName: "User Registration",
+          captureFormDataOnAbandon: true,
+          customAttributes: { isRegistrationSubmitted: true },
+        });
+        console.log("Genesys: User Registration Submitted");
+      }
+
       onClose();
     } catch (error) {
       console.error("Error during registration:", error);
       alert("An error occurred while registering. Please try again.");
+
+      if (cookieConsent === "accept" && window.Genesys) {
+        Genesys("command", "Journey.formsTrack", {
+          selector: "#registration-form",
+          formName: "User Registration",
+          captureFormDataOnAbandon: true,
+          customAttributes: { isRegistrationSubmitted: false },
+        });
+        console.log("Genesys: User Registration Cancelled");
+      }
+
     } finally {
       setLoading(false);
     }
