@@ -52,7 +52,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           console.log("Genesys: User login event recorded.");
 
           Genesys("command", "Journey.formsTrack", {
-            selector: "form",
+            selector: "login-form",
             formName: "login_form",
             captureFormDataOnAbandon: false,
             customAttributes: {
@@ -92,7 +92,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "form",
+        selector: "login-form",
         formName: "login_form",
         captureFormDataOnAbandon: false,
         customAttributes: {
