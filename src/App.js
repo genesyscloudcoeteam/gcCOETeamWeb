@@ -76,8 +76,8 @@ const App = () => {
       };
 
       document.head.appendChild(script);
-    };
-
+    }
+  };
 
     // Initialize Genesys Script on Consent
     useEffect(() => {
