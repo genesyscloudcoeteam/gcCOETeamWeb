@@ -40,7 +40,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "registration-form",
+          selector: "#registration-form",
           formName: "registration_form",
           captureFormDataOnAbandon: false,
           customAttributes: { isRegistrationSubmitted: true },
@@ -55,7 +55,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "registration-form",
+          selector: "#registration-form",
           formName: "registration_form",
           captureFormDataOnAbandon: false,
           customAttributes: {
@@ -73,7 +73,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "registration-form",
+        selector: "#registration-form",
         formName: "registration_form",
         captureFormDataOnAbandon: false,
         customAttributes: {

@@ -43,16 +43,16 @@ const LoginModal = ({ cookieConsent, onClose }) => {
               crmId: crmId,
             },
             traitsMapper: [
-              { fieldName: "email", traitname: "email" },
-              { fieldName: "givenName", traitname: "givenName" },
-              { fieldName: "familyName", traitname: "familyName" },
+              { fieldName: "email"},
+              { fieldName: "givenName"},
+              { fieldName: "familyName"},
             ],
           });
 
           console.log("Genesys: User login event recorded.");
 
           Genesys("command", "Journey.formsTrack", {
-            selector: "login-form",
+            selector: "#login-form",
             formName: "login_form",
             captureFormDataOnAbandon: false,
             customAttributes: {
@@ -63,9 +63,9 @@ const LoginModal = ({ cookieConsent, onClose }) => {
               crmId: crmId,
             },
             traitsMapper: [
-              { fieldName: "email", traitname: "email" },
-              { fieldName: "givenName", traitname: "givenName" },
-              { fieldName: "familyName", traitname: "familyName" },  
+              { fieldName: "email"},
+              { fieldName: "givenName"},
+              { fieldName: "familyName"},  
             ],
           });
           console.log("Genesys: User login form recorded.");
@@ -92,7 +92,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "login-form",
+        selector: "#login-form",
         formName: "login_form",
         captureFormDataOnAbandon: false,
         customAttributes: {
