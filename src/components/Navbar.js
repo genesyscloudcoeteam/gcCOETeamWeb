@@ -8,7 +8,7 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
   useEffect(() => {
     const checkGenesysAvailability = () => {
       if (window.Genesys) {
-        console.log("Genesys is ready and cookies option has been selected.");
+        //console.log("Genesys is ready and cookies option has been selected.");
         setIsGenesysReady(true);
       } else {
         setIsGenesysReady(false);

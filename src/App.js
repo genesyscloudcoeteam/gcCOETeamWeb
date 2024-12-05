@@ -68,7 +68,7 @@ const App = () => {
               "command",
               "Toaster.open",
               {
-                title: "Welcome to Genesys Cloud COE Team Demo Website",
+                title: "Welcome from The Genesys Cloud COE Team",
                 body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
                 buttons: {
                   type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
@@ -85,49 +85,85 @@ const App = () => {
                 console.log("There was an error running the Toaster.open command:", error);
               }
             );
-          }); 
+          });
 
-       }
+          Genesys(
+            "subscribe",
+            "Toaster.accepted",
+            function (e) {
+              console.log("Toaster was accepted", e);
+              Genesys("command", "Messenger.open",
+                {},
+                function () {
+                  console.log("Messenger was opened");
+                },
+                function () {
+                  console.log("Messenger could not be opened");
+                }
+              );
+            }
+          );
+
+        }
       }, 100);
     } else if (cookieConsent === "decline") {
       console.log("User declined cookies. Loading alternative Genesys script.");
       loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
-      // Subscribe to Journey.ready event
       const waitForGenesys = setInterval(() => {
+        console.log("Checking Genesys availability...");
         if (window.Genesys) {
           clearInterval(waitForGenesys);
-          Genesys("subscribe", "Launcher.ready", function () {
-            console.log("Launcher plugin is ready.");
-          });
+          console.log("Genesys script loaded for decline logic.");
 
-          Genesys("subscribe", "Toaster.ready", () => {
-            Genesys(
-              "command",
-              "Toaster.open",
-              {
-                title: "Welcome to Genesys Cloud COE Team Demo Website",
-                body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
-                buttons: {
-                  type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
-                  primary: "Get Support", // optional, default value is "Accept"
-                  secondary: "Maybe Later", // optional, default value is "Decline"
+          try {
+            Genesys("subscribe", "Launcher.ready", function () {
+              console.log("Launcher plugin is ready.");
+            });
+
+            Genesys("subscribe", "Toaster.ready", () => {
+              console.log("Toaster plugin is ready. Opening toaster.");
+              Genesys(
+                "command",
+                "Toaster.open",
+                {
+                  title: "Welcome from The Genesys Cloud COE Team",
+                  body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
+                  buttons: {
+                    type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
+                    primary: "Get Support", // optional, default value is "Accept"
+                    secondary: "Maybe Later", // optional, default value is "Decline"
+                  },
                 },
-              },
-              function () {
-                /*fulfilled callback*/
-                console.log("Toaster is opened");
-              },
-              function (error) {
-                /*rejected callback*/
-                console.log("There was an error running the Toaster.open command:", error);
-              }
-            );
-          }); 
+                function () {
+                  console.log("Toaster is opened.");
+                },
+                function (error) {
+                  console.error("Error running Toaster.open command:", error);
+                }
+              );
+            });
 
+            Genesys("subscribe", "Toaster.accepted", function (e) {
+              console.log("Toaster was accepted", e);
+              Genesys(
+                "command",
+                "Messenger.open",
+                {},
+                function () {
+                  console.log("Messenger was opened.");
+                },
+                function () {
+                  console.error("Messenger could not be opened.");
+                }
+              );
+            });
+          } catch (error) {
+            console.error("Error executing Genesys commands:", error);
+          }
         }
       }, 100);
-    }    
+    }
   }, [cookieConsent]);
 
   // Dynamically Update Page Titles Based on Routes
