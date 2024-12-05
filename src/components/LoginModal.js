@@ -114,12 +114,13 @@ const LoginModal = ({ cookieConsent, onClose }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content" id="login-form">
+      <div className="modal-content">
         <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form id="login-form" onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email Address"
+            label="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -127,6 +128,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           <input
             type="password"
             placeholder="Password"
+            label="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

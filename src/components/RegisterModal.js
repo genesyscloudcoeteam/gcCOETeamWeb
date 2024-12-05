@@ -98,13 +98,14 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content" id="registration-form">
+      <div className="modal-content">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
+        <form id="registration-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="firstName"
             placeholder="First Name"
+            label="First Name"
             value={formData.firstName}
             onChange={(e) =>
               setFormData({ ...formData, firstName: e.target.value })
@@ -115,6 +116,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="text"
             name="lastName"
             placeholder="Last Name"
+            label="Last Name"
             value={formData.lastName}
             onChange={(e) =>
               setFormData({ ...formData, lastName: e.target.value })
@@ -125,6 +127,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="email"
             name="email"
             placeholder="Email Address"
+            label="Email Address"
             value={formData.email}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
@@ -135,6 +138,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="password"
             name="password"
             placeholder="Password"
+            label="Password"
             value={formData.password}
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
@@ -145,6 +149,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
+            label="Confirm Password"
             value={formData.confirmPassword}
             onChange={(e) =>
               setFormData({ ...formData, confirmPassword: e.target.value })
