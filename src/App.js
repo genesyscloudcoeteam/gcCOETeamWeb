@@ -84,7 +84,7 @@ const App = () => {
       //loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
       loadGenesysTrackingScript();
       loadGenesysMessengerScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
-      
+
       // Subscribe to Journey.ready event
       const waitForGenesys = setInterval(() => {
         if (window.Genesys) {
@@ -139,7 +139,7 @@ const App = () => {
       }, 100);
     } else if (cookieConsent === "decline") {
       console.log("User declined cookies. Loading alternative Genesys script.");
-      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+      loadGenesysMessengerScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
       const waitForGenesys = setInterval(() => {
         console.log("Checking Genesys availability...");
