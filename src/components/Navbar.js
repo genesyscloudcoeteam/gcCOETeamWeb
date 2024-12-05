@@ -1,14 +1,26 @@
 /* global Genesys */
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ onRegisterClick, onLoginClick }) => {
   return (
     <nav>
-      <h1>Demo Retail Store</h1>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/shop">Shop</a></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/shop">Shop</Link>
+        </li>
+        <li>
+          <Link to="/cart">Cart</Link>
+        </li>
+        <li>
+          <Link to="/checkout">Checkout</Link>
+        </li>
         <li>
           <button onClick={onRegisterClick}>Register</button>
         </li>
