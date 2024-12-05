@@ -1,7 +1,8 @@
 /* global Genesys */
 import React, { useState } from "react";
+import axios from "axios";
 
-const RegisterModal = ({ cookieConsent, onClose }) => {
+const RegisterModal = ({ onClose }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -10,13 +11,17 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
     confirmPassword: "",
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      console.error("Passwords do not match!");
+      alert("Passwords do not match!");
       return;
     }
+
+    setLoading(true);
 
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
@@ -28,7 +33,26 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       console.log("Genesys: User Registration Submitted");
     }
 
-    onClose(); // Close modal after submission
+    try {
+      // Call the registration API (via Lambda)
+      const response = await axios.post(
+        "https://ppv7vy7drqzhvsifbmf7mf4bha0jutwh.lambda-url.eu-west-1.on.aws",
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+        }
+      );
+
+      // Notify user of success and close modal
+      alert(response.data.message);
+      onClose();
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred while registering. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -49,13 +73,15 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
     <div className="modal">
       <div className="modal-content">
         <h2>Register</h2>
-        <form id="registration-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="firstName"
             placeholder="First Name"
             value={formData.firstName}
-            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, firstName: e.target.value })
+            }
             required
           />
           <input
@@ -63,7 +89,9 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             name="lastName"
             placeholder="Last Name"
             value={formData.lastName}
-            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, lastName: e.target.value })
+            }
             required
           />
           <input
@@ -71,7 +99,9 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             name="email"
             placeholder="Email Address"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
           />
           <input
@@ -79,7 +109,9 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             name="password"
             placeholder="Password"
             value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             required
           />
           <input
@@ -87,10 +119,14 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
             name="confirmPassword"
             placeholder="Confirm Password"
             value={formData.confirmPassword}
-            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, confirmPassword: e.target.value })
+            }
             required
           />
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
           <button type="button" onClick={handleCancel}>
             Cancel
           </button>
