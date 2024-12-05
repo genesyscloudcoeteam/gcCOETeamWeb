@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
 
   useEffect(() => {
     const checkGenesysAvailability = () => {
-      if (window.Genesys) {
+      if (window.Genesys || window.ac) {
         //console.log("Genesys is ready and cookies option has been selected.");
         setIsGenesysReady(true);
       } else {

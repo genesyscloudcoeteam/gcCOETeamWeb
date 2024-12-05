@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";

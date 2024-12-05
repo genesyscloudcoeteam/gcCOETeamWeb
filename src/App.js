@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -55,7 +55,7 @@ const App = () => {
       (function(a,t,c,l,o,u,d){a['_genesysJourneySdk']=o;a[o]=a[o]||function(){
         (a[o].q=a[o].q||[]).push(arguments)},a[o].l=1*new Date();u=t.createElement(c),
         d=t.getElementsByTagName(c)[0];u.async=1;u.src=l;u.charset='utf-8';d.parentNode.insertBefore(u,d)
-        })(window, document, 'GenesysTrackingScript', 'https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js', 'ac');
+        })(window, document, 'script', 'https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js', 'ac');
         ac('init', '3b03b67a-2349-4a03-8b28-c8ac5c26c49a', { region: 'euw1' });
         ac('load', 'autotrackUrlChange');
     }
@@ -70,7 +70,7 @@ const App = () => {
       loadGenesysTrackingSnippet();
       
       const waitForGenesysTrackingScript = setInterval(() => {
-        if (window.GenesysTrackingScript) {
+        if (window.ac) {
           clearInterval(waitForGenesysTrackingScript);
           console.log("Genesys tracking script loaded.");  
         }

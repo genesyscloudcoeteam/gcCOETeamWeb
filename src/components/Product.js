@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";

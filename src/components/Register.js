@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
 

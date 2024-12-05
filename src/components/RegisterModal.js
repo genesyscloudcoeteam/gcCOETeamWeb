@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -40,7 +40,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       alert(response.data.message);
 
       console.log("Registration form exists:", document.querySelector("#registration-form"));
-      console.log("Genesys is ready:", !!window.GenesysTrackingScript);
+      console.log("Genesys is ready:", !!window.ac);
       
       //if (cookieConsent === "accept" && window.Genesys) {
       //  Genesys("command", "Journey.formsTrack", {
@@ -55,7 +55,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       //  console.log("Genesys: User Registration Submitted");
       //}
 
-      if (cookieConsent === "accept" && window.GenesysTrackingScript) {
+      if (cookieConsent === "accept" && window.ac) {
         ac('forms:track', '#registration-form', 
           {
             captureFormDataOnAbandon: false,
@@ -76,7 +76,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.GenesysTrackingScript);
 
-      if (cookieConsent === "accept" && window.GenesysTrackingScript) {
+      if (cookieConsent === "accept" && window.ac) {
         //Genesys("command", "Journey.formsTrack", {
         //  selector: "#registration-form",
         //  formName: "registration",
@@ -103,10 +103,10 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
   };
 
   const handleCancel = () => {
-    if (cookieConsent === "accept" && window.GenesysTrackingScript) {
+    if (cookieConsent === "accept" && window.ac) {
 
       console.log("Registration form exists:", document.querySelector("#registration-form"));
-      console.log("Genesys is ready:", !!window.GenesysTrackingScript);
+      console.log("Genesys is ready:", !!window.ac);
 
       //Genesys("command", "Journey.formsTrack", {
       //  selector: "#registration-form",

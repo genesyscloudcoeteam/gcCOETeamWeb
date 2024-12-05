@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React from "react";
 
 const Button = ({ text, onClick }) => {

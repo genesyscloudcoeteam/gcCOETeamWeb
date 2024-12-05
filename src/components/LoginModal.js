@@ -1,5 +1,5 @@
 /* global Genesys */
-/* global GenesysTrackingScript */
+/* global ac */
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -31,7 +31,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       if (cookieConsent === "accept") {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
-        if (window.GenesysTrackingScript) {
+        if (window.ac) {
           console.log("Genesys object is available. Recording login event.");
 
           //Genesys("command", "Journey.record", {
