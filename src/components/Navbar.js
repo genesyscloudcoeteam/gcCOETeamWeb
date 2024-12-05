@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ onRegisterClick, onLoginClick }) => {
   const isGenesysReady = window.Genesys;
+  console.log("Genesys commands loaded and available to Navbar:", isGenesysReady);
   return (
     <nav className="navbar">
       <ul className="navbar-links">
