@@ -40,9 +40,9 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "registration-form",
-          formName: "User Registration",
-          captureFormDataOnAbandon: true,
+          selector: "form",
+          formName: "registration_form",
+          captureFormDataOnAbandon: false,
           customAttributes: { isRegistrationSubmitted: true },
         });
         console.log("Genesys: User Registration Submitted");
@@ -55,10 +55,12 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "registration-form",
-          formName: "User Registration",
-          captureFormDataOnAbandon: true,
-          customAttributes: { isRegistrationSubmitted: false },
+          selector: "form",
+          formName: "registration_form",
+          captureFormDataOnAbandon: false,
+          customAttributes: {
+            isLoginFormSubmitted: false,
+          },
         });
         console.log("Genesys: User Registration Cancelled");
       }
@@ -71,10 +73,12 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "registration-form",
-        formName: "User Registration",
-        captureFormDataOnAbandon: true,
-        customAttributes: { isRegistrationSubmitted: false },
+        selector: "form",
+        formName: "registration_form",
+        captureFormDataOnAbandon: false,
+        customAttributes: {
+          isLoginFormSubmitted: false,
+        },
       });
       console.log("Genesys: User Registration Cancelled");
     }

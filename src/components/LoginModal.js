@@ -34,56 +34,42 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           console.log("Genesys object is available. Recording login event.");
 
           Genesys("command", "Journey.record", {
-            eventName: "UserLogin",
+            eventName: "userLogin",
             customAttributes: {
+              isLoginFormSubmitted: true,
               email: userEmail,
               givenName: firstName,
               familyName: lastName,
               crmId: crmId,
             },
             traitsMapper: [
-              { fieldName: "email" },
-              { fieldName: "givenName" },
-              { fieldName: "familyName" },
-              { fieldName: "crmId" },
+              { fieldName: "email", traitname: "email" },
+              { fieldName: "firstName", traitname: "givenName" },
+              { fieldName: "lastName", traitname: "familyName" },
             ],
           });
 
-          console.log("Genesys: User login recorded.");
-        } else {
-          console.error("Genesys object is not available. Ensure Genesys script is loaded.");
-        }
-      } else {
-        console.warn("Cookie consent is not accepted. Genesys logic skipped.");
-      }
-    
+          console.log("Genesys: User login event recorded.");
 
-      // Genesys logic: tracking the login event
-      if (cookieConsent === "accept") {
-        console.log("Cookie consent accepted. Proceeding with Genesys logic.");
+          Genesys("command", "Journey.formsTrack", {
+            selector: "form",
+            formName: "login_form",
+            captureFormDataOnAbandon: false,
+            customAttributes: {
+              isLoginFormSubmitted: true,
+              email: email,
+              givenName: firstName,
+              familyName: lastName,
+              crmId: crmId,
+            },
+            traitsMapper: [
+              { fieldName: "email", traitname: "email" },
+              { fieldName: "firstName", traitname: "givenName" },
+              { fieldName: "lastName", traitname: "familyName" },  
+            ],
+          });
+          console.log("Genesys: User login form recorded.");
 
-        if (window.Genesys) {
-          console.log("Genesys object is available. Recording login form event.");
-
-        Genesys("command", "Journey.formsTrack", {
-          selector: "login-form",
-          formName: "User Login",
-          captureFormDataOnAbandon: true,
-          customAttributes: {
-            email: email,
-            givenName: firstName,
-            familyName: lastName,
-            crmId: crmId,
-          },
-          traitsMapper: [
-            { "fieldName": "email" },
-            { "fieldName": "givenName" },
-            { "fieldName": "familyName" },
-            { "fieldName": "crmId" }
-
-          ],
-        });
-        console.log("Genesys: User login form recorded.");
         } else {
           console.error("Genesys object is not available. Ensure Genesys script is loaded.");
         }
@@ -106,15 +92,12 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "login-form",
-        formName: "User Login",
-        captureFormDataOnAbandon: true,
+        selector: "form",
+        formName: "login_form",
+        captureFormDataOnAbandon: false,
         customAttributes: {
-          email: email
+          isLoginFormSubmitted: false,
         },
-        traitsMapper: [
-          { "fieldName": "email" }
-        ],
       });
       console.log("Genesys: User Login Form Cancelled");
     }

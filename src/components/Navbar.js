@@ -2,8 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
-  const isGenesysReady = window.Genesys === "accept";
+const Navbar = ({ onRegisterClick, onLoginClick }) => {
+  const isGenesysReady = window.Genesys;
   return (
     <nav className="navbar">
       <ul className="navbar-links">
