@@ -51,11 +51,11 @@ const LoginModal = ({ cookieConsent, onClose }) => {
 
           console.log("Genesys: User login event recorded.");
 
-          console.log("Login form exists:", document.querySelector(".modal"));
+          console.log("Login form exists:", document.querySelector("#login-form"));
           console.log("Genesys is ready:", !!window.Genesys);
 
           Genesys("command", "Journey.formsTrack", {
-            selector: ".modal",
+            selector: "#login-form",
             formName: "login",
             captureFormDataOnAbandon: false,
             customAttributes: {
@@ -95,11 +95,11 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
 
-      console.log("Login form exists:", document.querySelector(".modal"));
+      console.log("Login form exists:", document.querySelector("#login-form"));
       console.log("Genesys is ready:", !!window.Genesys);
       
       Genesys("command", "Journey.formsTrack", {
-        selector: ".modal",
+        selector: "#login-form",
         formName: "login",
         captureFormDataOnAbandon: false,
         customAttributes: {
@@ -114,9 +114,9 @@ const LoginModal = ({ cookieConsent, onClose }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content" id="login-form">
         <h2>Login</h2>
-        <form id="login-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email Address"

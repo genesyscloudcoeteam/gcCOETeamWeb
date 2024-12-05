@@ -38,12 +38,12 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       // Notify user of success and close modal
       alert(response.data.message);
 
-      console.log("Registration form exists:", document.querySelector(".modal"));
+      console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.Genesys);
       
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: ".modal",
+          selector: "#registration-form",
           formName: "registration",
           captureFormDataOnAbandon: false,
           customAttributes: { isRegistrationSubmitted: true },
@@ -56,12 +56,12 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       console.error("Error during registration:", error);
       alert("An error occurred while registering. Please try again.");
 
-      console.log("Registration form exists:", document.querySelector(".modal"));
+      console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.Genesys);
 
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: ".modal",
+          selector: "#registration-form",
           formName: "registration",
           captureFormDataOnAbandon: false,
           customAttributes: {
@@ -79,11 +79,11 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
 
-      console.log("Registration form exists:", document.querySelector(".modal"));
+      console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.Genesys);
 
       Genesys("command", "Journey.formsTrack", {
-        selector: ".modal",
+        selector: "#registration-form",
         formName: "registration",
         captureFormDataOnAbandon: false,
         customAttributes: {
@@ -98,9 +98,9 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content" id="registration-form">
         <h2>Register</h2>
-        <form id="registration-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="firstName"
