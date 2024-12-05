@@ -19,6 +19,14 @@ const App = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const location = useLocation(); // Ensures useLocation is inside a valid Router context
 
+   // Check for existing cookie consent on initial load
+   useEffect(() => {
+    const storedConsent = sessionStorage.getItem("cookieConsent");
+    if (storedConsent) {
+      setCookieConsent(storedConsent);
+    }
+  }, []);
+
   // Genesys Script Initialization
   const loadGenesysScript = (deploymentId) => {
     if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
@@ -84,6 +92,7 @@ const App = () => {
       <Navbar
         onRegisterClick={() => setIsRegisterModalOpen(true)}
         onLoginClick={() => setIsLoginModalOpen(true)}
+        cookieConsent={cookieConsent}
       />
       <main>
         <Routes>
@@ -96,7 +105,7 @@ const App = () => {
         </Routes>
       </main>
       <Footer />
-      <CookieConsent onConsent={setCookieConsent} />
+      <CookieConsent onConsent={(consent) => setCookieConsent(consent)} />
       {isRegisterModalOpen && (
         <RegisterModal
           cookieConsent={cookieConsent}

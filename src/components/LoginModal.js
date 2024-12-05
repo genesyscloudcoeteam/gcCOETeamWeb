@@ -15,7 +15,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       // Call the login API (via Lambda)
       const response = await axios.post("https://ppv7vy7drqzhvsifbmf7mf4bha0jutwh.lambda-url.eu-west-1.on.aws", {
         type: "login",
-        email,
+        email: email
       });
 
       const { message, email: userEmail, firstName, lastName, crmId } = response.data;

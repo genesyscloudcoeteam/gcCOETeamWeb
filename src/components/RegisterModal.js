@@ -38,9 +38,10 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       const response = await axios.post(
         "https://ppv7vy7drqzhvsifbmf7mf4bha0jutwh.lambda-url.eu-west-1.on.aws",
         {
+          type: "register",
           firstName: formData.firstName,
           lastName: formData.lastName,
-          email: formData.email,
+          email: formData.email          
         }
       );
 
