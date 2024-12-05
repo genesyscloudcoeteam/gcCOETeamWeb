@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState } from "react";
 import axios from "axios";
-import { executeAcCommand } from "./utils/acHelper";
+import { executeAcCommand } from "../utils/acHelper";
 
 const RegisterModal = ({ cookieConsent, onClose }) => {
   const [formData, setFormData] = useState({
