@@ -31,37 +31,13 @@ const LoginModal = ({ cookieConsent, onClose }) => {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
         if (window.Genesys) {
-          //console.log("Genesys object is available. Recording login event.");
+          console.log("Genesys object is available. Recording login event.");
 
-          //Genesys("command", "Journey.record", {
-          //  eventName: "userLogin",
-          //  customAttributes: {
-          //    isLoginFormSubmitted: true,
-          //    email: userEmail,
-          //    givenName: firstName,
-          //    familyName: lastName,
-          //    crmId: crmId,
-          //  },
-          //  traitsMapper: [
-          //    { fieldName: "email"},
-          //    { fieldName: "givenName"},
-          //    { fieldName: "familyName"},
-          //  ],
-          //});
-
-          //console.log("Genesys: User login event recorded.");
-
-          console.log("Login form exists:", document.querySelector("#login-form"));
-          console.log("Genesys is ready:", !!window.Genesys);
-
-          Genesys("command", "Journey.formsTrack", {
-            selector: "#login-form",
-            formName: "login",
-            captureFormDataOnAbandon: false,
-            captureFormDataOnSubmit: true,
+          Genesys("command", "Journey.record", {
+            eventName: "userLogin",
             customAttributes: {
               isLoginFormSubmitted: true,
-              email: email,
+              email: userEmail,
               givenName: firstName,
               familyName: lastName,
               crmId: crmId,
@@ -69,11 +45,12 @@ const LoginModal = ({ cookieConsent, onClose }) => {
             traitsMapper: [
               { fieldName: "email"},
               { fieldName: "givenName"},
-              { fieldName: "familyName"},  
+              { fieldName: "familyName"},
             ],
           });
-          console.log("Genesys: User login form recorded.");
 
+          console.log("Genesys: User login event recorded.");
+         
         } else {
           console.error("Genesys object is not available. Ensure Genesys script is loaded.");
         }
@@ -94,23 +71,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
   };
 
   const handleCancel = () => {
-    if (cookieConsent === "accept" && window.Genesys) {
-
-      console.log("Login form exists:", document.querySelector("#login-form"));
-      console.log("Genesys is ready:", !!window.Genesys);
-      
-      Genesys("command", "Journey.formsTrack", {
-        selector: "#login-form",
-        formName: "login",
-        captureFormDataOnAbandon: false,
-        captureFormDataOnSubmit: false,
-        customAttributes: {
-          isLoginFormSubmitted: false,
-        },
-      });
-      console.log("Genesys: User Login Form Cancelled");
-    }
-
+    console.log("Genesys: User Login Form Cancelled");
     onClose(); // Close modal
   };
 

@@ -69,7 +69,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
           captureFormDataOnAbandon: false,
           captureFormDataOnSubmit: false,
           customAttributes: {
-            isLoginFormSubmitted: false,
+            isRegistrationSubmitted: false,
           },
         });
         console.log("Genesys: User Registration Cancelled");
@@ -92,7 +92,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
         captureFormDataOnAbandon: false,
         captureFormDataOnSubmit: false,
         customAttributes: {
-          isLoginFormSubmitted: false,
+          isRegistrationSubmitted: false,
         },
       });
       console.log("Genesys: User Registration Cancelled");
