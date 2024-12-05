@@ -13,7 +13,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
 
     try {
       // Call the login API (via Lambda)
-      const response = await axios.post("https://your-api-gateway-endpoint/login", {
+      const response = await axios.post("https://ppv7vy7drqzhvsifbmf7mf4bha0jutwh.lambda-url.eu-west-1.on.aws", {
         type: "login",
         email,
       });
