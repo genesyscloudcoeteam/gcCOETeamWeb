@@ -13,6 +13,7 @@ import Checkout from "./components/Checkout";
 import CookieConsent from "./components/CookieConsent";
 import RegisterModal from "./components/RegisterModal";
 import LoginModal from "./components/LoginModal";
+import { executeAcCommand } from "./utils/acHelper";
 
 const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
@@ -29,7 +30,7 @@ const App = () => {
   }, []);
 
   // Genesys Script Initialization
-  const loadGenesysMessengerScript = (deploymentId) => {
+  const loadGenesysScript = (deploymentId) => {
     if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js"]`)) {
       (function (g, e, n, es, ys) {
         g["_genesysJs"] = e;
@@ -50,207 +51,121 @@ const App = () => {
     }
   };
 
-  const loadGenesysTrackingScript = () => {
-    // Dynamically load the Journey SDK script
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";
-    script.charset = "utf-8";
-    console.log("Loading Journey SDK script.");
+  // Initialize Genesys and AC Scripts on Consent
+  useEffect(() => {
+    if (cookieConsent === "accept") {
+      console.log("User accepted cookies. Loading scripts.");
 
-    script.onload = () => {
-      console.log("Journey SDK script loaded. Initializing AC.");
-      const waitForAC = setInterval(() => {
-        console.log("Checking Genesys AC availability...");
+      // Load the Genesys script
+      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
 
-        if (window.ac) {
-          clearInterval(waitForAC);
-          window.ac("init", "3b03b67a-2349-4a03-8b28-c8ac5c26c49a", { region: "euw1" });
-          window.ac("load", "autotrackUrlChange");
-          console.log("AC initialized with autotrackUrlChange.");
-        } else {
-          console.error("AC object not found after loading the Journey SDK.");
+      // Load Journey SDK (AC)
+      if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js"]`)) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";
+        script.charset = "utf-8";
+        document.head.appendChild(script);
+
+        script.onload = () => {
+          console.log("Journey SDK script loaded.");
+          executeAcCommand("init", "3b03b67a-2349-4a03-8b28-c8ac5c26c49a", { region: "euw1" });
+          executeAcCommand("load", "autotrackUrlChange");
+        };
+
+        script.onerror = (error) => {
+          console.error("Error loading Journey SDK script:", error);
+        };
+      }
+
+      // Subscribe to Genesys events
+      const waitForGenesys = setInterval(() => {
+        if (window.Genesys) {
+          clearInterval(waitForGenesys);
+          Genesys("subscribe", "Toaster.ready", () => {
+            Genesys(
+              "command",
+              "Toaster.open",
+              {
+                title: "Welcome from The Genesys Cloud COE Team",
+                body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
+                buttons: {
+                  type: "binary",
+                  primary: "Get Support",
+                  secondary: "Maybe Later",
+                },
+              },
+              () => console.log("Toaster is opened."),
+              (error) => console.error("Error running Toaster.open command:", error)
+            );
+          });
         }
       }, 100);
+    } else if (cookieConsent === "decline") {
+      console.log("User declined cookies. Loading alternative Genesys script.");
 
-      script.onerror = (error) => {
-        console.error("Error loading Journey SDK script:", error);
-      };
+      // Load the Genesys script
+      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
-      document.head.appendChild(script);
+      const waitForGenesys = setInterval(() => {
+        if (window.Genesys) {
+          clearInterval(waitForGenesys);
+          console.log("Genesys script loaded for decline logic.");
+        }
+      }, 100);
     }
-  };
+  }, [cookieConsent]);
 
-    // Initialize Genesys Script on Consent
-    useEffect(() => {
-      if (cookieConsent === "accept") {
-        console.log("User accepted cookies. Loading Legacy Tracking Snippet and Messenger Widget.");
-        //loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
-        loadGenesysTrackingScript();
-        loadGenesysMessengerScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+  // Dynamically Update Page Titles Based on Routes
+  useEffect(() => {
+    const titles = {
+      "/": "Home",
+      "/about": "About",
+      "/shop": "Shop",
+      "/cart": "Cart",
+      "/checkout": "Checkout",
+    };
 
-        // Subscribe to Journey.ready event
-        const waitForGenesys = setInterval(() => {
-          if (window.Genesys) {
-            clearInterval(waitForGenesys);
+    const currentTitle = location.pathname.startsWith("/product/")
+      ? "Product Details"
+      : titles[location.pathname] || "gcCOETeamWeb";
 
-            //Genesys("subscribe", "Journey.ready", function () {
-            //  console.log("Journey & Launcher plugin is ready.");
-            //});
+    document.title = currentTitle;
+  }, [location]);
 
-            Genesys("subscribe", "Toaster.ready", () => {
-              Genesys(
-                "command",
-                "Toaster.open",
-                {
-                  title: "Welcome from The Genesys Cloud COE Team",
-                  body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
-                  buttons: {
-                    type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
-                    primary: "Get Support", // optional, default value is "Accept"
-                    secondary: "Maybe Later", // optional, default value is "Decline"
-                  },
-                },
-                function () {
-                  /*fulfilled callback*/
-                  console.log("Toaster is opened");
-                },
-                function (error) {
-                  /*rejected callback*/
-                  console.log("There was an error running the Toaster.open command:", error);
-                }
-              );
-            });
-
-            Genesys(
-              "subscribe",
-              "Toaster.accepted",
-              function (e) {
-                console.log("Toaster was accepted", e);
-                Genesys("command", "Messenger.open",
-                  {},
-                  function () {
-                    console.log("Messenger was opened");
-                  },
-                  function () {
-                    console.log("Messenger could not be opened");
-                  }
-                );
-              }
-            );
-
-          }
-        }, 100);
-      } else if (cookieConsent === "decline") {
-        console.log("User declined cookies. Loading alternative Genesys script.");
-        loadGenesysMessengerScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
-
-        const waitForGenesys = setInterval(() => {
-          console.log("Checking Genesys availability...");
-          if (window.Genesys) {
-            clearInterval(waitForGenesys);
-            console.log("Genesys script loaded for decline logic.");
-
-            try {
-              Genesys("subscribe", "Launcher.ready", function () {
-                console.log("Launcher plugin is ready.");
-              });
-
-              Genesys("subscribe", "Toaster.ready", () => {
-                console.log("Toaster plugin is ready. Opening toaster.");
-                Genesys(
-                  "command",
-                  "Toaster.open",
-                  {
-                    title: "Welcome from The Genesys Cloud COE Team",
-                    body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
-                    buttons: {
-                      type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
-                      primary: "Get Support", // optional, default value is "Accept"
-                      secondary: "Maybe Later", // optional, default value is "Decline"
-                    },
-                  },
-                  function () {
-                    console.log("Toaster is opened.");
-                  },
-                  function (error) {
-                    console.error("Error running Toaster.open command:", error);
-                  }
-                );
-              });
-
-              Genesys("subscribe", "Toaster.accepted", function (e) {
-                console.log("Toaster was accepted", e);
-                Genesys(
-                  "command",
-                  "Messenger.open",
-                  {},
-                  function () {
-                    console.log("Messenger was opened.");
-                  },
-                  function () {
-                    console.error("Messenger could not be opened.");
-                  }
-                );
-              });
-            } catch (error) {
-              console.error("Error executing Genesys commands:", error);
-            }
-          }
-        }, 100);
-      }
-    }, [cookieConsent]);
-
-    // Dynamically Update Page Titles Based on Routes
-    useEffect(() => {
-      const titles = {
-        "/": "Home",
-        "/about": "About",
-        "/shop": "Shop",
-        "/cart": "Cart",
-        "/checkout": "Checkout",
-      };
-
-      const currentTitle = location.pathname.startsWith("/product/")
-        ? "Product Details"
-        : titles[location.pathname] || "gcCOETeamWeb";
-
-      document.title = currentTitle;
-    }, [location]);
-
-    return (
-      <div id="root">
-        <Navbar
-          onRegisterClick={() => setIsRegisterModalOpen(true)}
-          onLoginClick={() => setIsLoginModalOpen(true)}
+  return (
+    <div id="root">
+      <Navbar
+        onRegisterClick={() => setIsRegisterModalOpen(true)}
+        onLoginClick={() => setIsLoginModalOpen(true)}
+        cookieConsent={cookieConsent}
+      />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </main>
+      <Footer />
+      <CookieConsent onConsent={(consent) => setCookieConsent(consent)} />
+      {isRegisterModalOpen && (
+        <RegisterModal
           cookieConsent={cookieConsent}
+          onClose={() => setIsRegisterModalOpen(false)}
         />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-          </Routes>
-        </main>
-        <Footer />
-        <CookieConsent onConsent={(consent) => setCookieConsent(consent)} />
-        {isRegisterModalOpen && (
-          <RegisterModal
-            cookieConsent={cookieConsent}
-            onClose={() => setIsRegisterModalOpen(false)}
-          />
-        )}
-        {isLoginModalOpen && (
-          <LoginModal
-            cookieConsent={cookieConsent}
-            onClose={() => setIsLoginModalOpen(false)}
-          />
-        )}
-      </div>
-    );
-  };
+      )}
+      {isLoginModalOpen && (
+        <LoginModal
+          cookieConsent={cookieConsent}
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+      )}
+    </div>
+  );
+};
 
-  export default App;
+export default App;
