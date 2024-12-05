@@ -40,7 +40,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "#registration-form",
+          selector: "registration-form",
           formName: "User Registration",
           captureFormDataOnAbandon: true,
           customAttributes: { isRegistrationSubmitted: true },
@@ -55,7 +55,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
       if (cookieConsent === "accept" && window.Genesys) {
         Genesys("command", "Journey.formsTrack", {
-          selector: "#registration-form",
+          selector: "registration-form",
           formName: "User Registration",
           captureFormDataOnAbandon: true,
           customAttributes: { isRegistrationSubmitted: false },
@@ -71,7 +71,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
   const handleCancel = () => {
     if (cookieConsent === "accept" && window.Genesys) {
       Genesys("command", "Journey.formsTrack", {
-        selector: "#registration-form",
+        selector: "registration-form",
         formName: "User Registration",
         captureFormDataOnAbandon: true,
         customAttributes: { isRegistrationSubmitted: false },
@@ -86,7 +86,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
     <div className="modal">
       <div className="modal-content">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
+        <form id="registration-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="firstName"

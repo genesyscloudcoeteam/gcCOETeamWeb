@@ -60,14 +60,24 @@ const App = () => {
         if (window.Genesys) {
           clearInterval(waitForGenesys);
           Genesys("subscribe", "Journey.ready", function () {
-            console.log("Journey plugin is ready.");
+            console.log("Journey & Launcher plugin is ready.");
           });
         }
       }, 100);
     } else if (cookieConsent === "decline") {
       console.log("User declined cookies. Loading alternative Genesys script.");
       loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
-    }
+
+      // Subscribe to Journey.ready event
+      const waitForGenesys = setInterval(() => {
+        if (window.Genesys) {
+          clearInterval(waitForGenesys);
+          Genesys("subscribe", "Launcher.ready", function () {
+            console.log("Launcher plugin is ready.");
+          });
+        }
+      }, 100);
+    }    
   }, [cookieConsent]);
 
   // Dynamically Update Page Titles Based on Routes

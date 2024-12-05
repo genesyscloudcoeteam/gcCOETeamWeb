@@ -63,7 +63,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
         if (window.Genesys) {
-          console.log("Genesys object is available. Recording login event.");
+          console.log("Genesys object is available. Recording login form event.");
 
         Genesys("command", "Journey.formsTrack", {
           selector: "login-form",
@@ -116,7 +116,7 @@ const LoginModal = ({ cookieConsent, onClose }) => {
           { "fieldName": "email" }
         ],
       });
-      console.log("Genesys: User Login Cancelled");
+      console.log("Genesys: User Login Form Cancelled");
     }
 
     onClose(); // Close modal

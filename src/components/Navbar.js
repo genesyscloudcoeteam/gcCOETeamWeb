@@ -2,7 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ onRegisterClick, onLoginClick }) => {
+const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
+  const isGenesysReady = window.Genesys === "accept";
   return (
     <nav className="navbar">
       <ul className="navbar-links">
@@ -23,8 +24,12 @@ const Navbar = ({ onRegisterClick, onLoginClick }) => {
         </li>
       </ul>
       <div className="navbar-buttons">
-        <button onClick={onRegisterClick}>Register</button>
-        <button onClick={onLoginClick}>Login</button>
+        {isGenesysReady && (
+          <>
+            <button onClick={onRegisterClick}>Register</button>
+            <button onClick={onLoginClick}>Login</button>
+          </>
+        )}
       </div>
     </nav>
   );
