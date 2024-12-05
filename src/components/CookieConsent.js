@@ -28,63 +28,21 @@ const CookieConsent = ({ onConsent }) => {
   if (!showBanner) return null;
 
   return (
-    <div style={styles.banner}>
-      <p style={styles.text}>
+    <div className="cookie-banner">
+      <p className="cookie-banner-text">
         We use cookies to improve your experience. You can accept or decline
         the use of cookies for this session.
       </p>
-      <div style={styles.buttons}>
-        <button onClick={handleAccept} style={styles.acceptButton}>
+      <div className="cookie-banner-buttons">
+        <button onClick={handleAccept} className="cookie-banner-accept-button">
           Accept
         </button>
-        <button onClick={handleDecline} style={styles.declineButton}>
+        <button onClick={handleDecline} className="cookie-banner-decline-button">
           Decline
         </button>
       </div>
     </div>
   );
-};
-
-const styles = {
-  banner: {
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    backgroundColor: "#152450",
-    color: "#fff",
-    textAlign: "center",
-    padding: "10px",
-    zIndex: 1000,
-    boxShadow: "0px -2px 5px rgba(0, 0, 0, 0.2)",
-  },
-  text: {
-    marginBottom: "10px",
-    fontSize: "14px",
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "10px",
-  },
-  acceptButton: {
-    backgroundColor: "#28a745",
-    padding: "10px 15px",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
-  declineButton: {
-    backgroundColor: "#dc3545",
-    padding: "10px 15px",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "14px",
-  },
 };
 
 export default CookieConsent;

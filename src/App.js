@@ -19,8 +19,8 @@ const App = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const location = useLocation(); // Ensures useLocation is inside a valid Router context
 
-   // Check for existing cookie consent on initial load
-   useEffect(() => {
+  // Check for existing cookie consent on initial load
+  useEffect(() => {
     const storedConsent = sessionStorage.getItem("cookieConsent");
     if (storedConsent) {
       setCookieConsent(storedConsent);
