@@ -57,16 +57,15 @@ const App = () => {
       console.log("User accepted cookies. Loading scripts.");
 
       // Load the Genesys script
-      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
       // Load Journey SDK (AC)
       if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js"]`)) {
         const script = document.createElement("script");
         script.async = true;
-        script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";
         script.charset = "utf-8";
-        document.head.appendChild(script);
-
+        script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";        
+        
         script.onload = () => {
           console.log("Journey SDK script loaded.");
           executeAcCommand("init", "3b03b67a-2349-4a03-8b28-c8ac5c26c49a", { region: "euw1" });
@@ -76,6 +75,7 @@ const App = () => {
         script.onerror = (error) => {
           console.error("Error loading Journey SDK script:", error);
         };
+        document.head.appendChild(script);
       }
 
       // Subscribe to Genesys events
@@ -124,8 +124,25 @@ const App = () => {
                   secondary: "Maybe Later",
                 },
               },
-              () => console.log("Toaster is opened."),
-              (error) => console.error("Error running Toaster.open command:", error)
+              function () {
+                /*fulfilled callback*/
+                console.log("Toaster is opened");
+                Genesys("command", "Messenger.open",
+                  {},
+                      function() {
+                          /*fulfilled callback*/
+                          console.log("Toaster offer accepted, messenger opened.")
+                      },
+                      function() {
+                          /*rejected callback*/
+                          console.log("Toaster offer accepted, but messenger could not be opened.", error)
+                      }
+                  );
+              },
+              function (error) {
+                /*rejected callback*/
+                console.log("There was an error running the Toaster.open command:", error);
+              }
             );
           });
         }
