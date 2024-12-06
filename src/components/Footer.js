@@ -1,6 +1,6 @@
 /* global Genesys */
 import React from "react";
-import { executeAcCommand } from "../utils/acHelper";
+import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const Footer = () => {
   return (

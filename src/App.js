@@ -1,5 +1,4 @@
 /* global Genesys */
-/* global ac */
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -13,7 +12,7 @@ import Checkout from "./components/Checkout";
 import CookieConsent from "./components/CookieConsent";
 import RegisterModal from "./components/RegisterModal";
 import LoginModal from "./components/LoginModal";
-import { executeAcCommand } from "./utils/acHelper";
+import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
@@ -57,96 +56,91 @@ const App = () => {
       console.log("User accepted cookies. Loading scripts.");
 
       // Load the Genesys script
-      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+      // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
+      // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
 
-      // Load Journey SDK (AC)
-      if (!document.querySelector(`script[src="https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js"]`)) {
-        const script = document.createElement("script");
-        script.async = true;
-        script.charset = "utf-8";
-        script.src = "https://apps.mypurecloud.ie/journey/sdk/js/web/v1/ac.js";        
-        
-        script.onload = () => {
-          console.log("Journey SDK script loaded.");
-          executeAcCommand("init", "3b03b67a-2349-4a03-8b28-c8ac5c26c49a", { region: "euw1" });
-          executeAcCommand("load", "autotrackUrlChange");
-        };
-
-        script.onerror = (error) => {
-          console.error("Error loading Journey SDK script:", error);
-        };
-        document.head.appendChild(script);
-      }
+      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
 
       // Subscribe to Genesys events
-      const waitForGenesys = setInterval(() => {
-        if (window.Genesys) {
-          clearInterval(waitForGenesys);
-          Genesys("subscribe", "Toaster.ready", () => {
-            Genesys(
-              "command",
-              "Toaster.open",
-              {
-                title: "Welcome from The Genesys Cloud COE Team",
-                body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
-                buttons: {
-                  type: "binary",
-                  primary: "Get Support",
-                  secondary: "Maybe Later",
-                },
+      executeGenesysCommand("subscribe", "Toaster.ready", () => {
+        executeGenesysCommand(
+          "command",
+          "Toaster.open",
+          {
+            title: "Welcome from The Genesys Cloud COE Team",
+            body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
+            buttons: {
+              type: "binary",
+              primary: "Get Support",
+              secondary: "Maybe Later",
+            },
+          },
+          function () {
+            /*fulfilled callback*/
+            console.log("Toaster is opened");
+            executeGenesysCommand("command", "Messenger.open",
+              {},
+              function () {
+                /*fulfilled callback*/
+                console.log("Toaster offer accepted, messenger opened.")
               },
-              () => console.log("Toaster is opened."),
-              (error) => console.error("Error running Toaster.open command:", error)
+              function () {
+                /*rejected callback*/
+                console.log("Toaster offer accepted, but messenger could not be opened.", error)
+              }
             );
-          });
-        }
-      }, 100);
+          },
+          function (error) {
+            /*rejected callback*/
+            console.log("There was an error running the Toaster.open command:", error);
+          }
+        );
+      });
+
     } else if (cookieConsent === "decline") {
       console.log("User declined cookies. Loading alternative Genesys script.");
 
       // Load the Genesys script
+      // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
+      // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
+
       loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
 
       // Subscribe to Genesys events
-      const waitForGenesys = setInterval(() => {
-        if (window.Genesys) {
-          clearInterval(waitForGenesys);
-          Genesys("subscribe", "Toaster.ready", () => {
-            Genesys(
-              "command",
-              "Toaster.open",
-              {
-                title: "Welcome from The Genesys Cloud COE Team",
-                body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
-                buttons: {
-                  type: "binary",
-                  primary: "Get Support",
-                  secondary: "Maybe Later",
-                },
-              },
+      executeGenesysCommand("subscribe", "Toaster.ready", () => {
+        executeGenesysCommand(
+          "command",
+          "Toaster.open",
+          {
+            title: "Welcome from The Genesys Cloud COE Team",
+            body: "Encountering issues? Our support team is ready to troubleshoot and assist you.",
+            buttons: {
+              type: "binary",
+              primary: "Get Support",
+              secondary: "Maybe Later",
+            },
+          },
+          function () {
+            /*fulfilled callback*/
+            console.log("Toaster is opened");
+            executeGenesysCommand("command", "Messenger.open",
+              {},
               function () {
                 /*fulfilled callback*/
-                console.log("Toaster is opened");
-                Genesys("command", "Messenger.open",
-                  {},
-                      function() {
-                          /*fulfilled callback*/
-                          console.log("Toaster offer accepted, messenger opened.")
-                      },
-                      function() {
-                          /*rejected callback*/
-                          console.log("Toaster offer accepted, but messenger could not be opened.", error)
-                      }
-                  );
+                console.log("Toaster offer accepted, messenger opened.")
               },
-              function (error) {
+              function () {
                 /*rejected callback*/
-                console.log("There was an error running the Toaster.open command:", error);
+                console.log("Toaster offer accepted, but messenger could not be opened.", error)
               }
             );
-          });
-        }
-      }, 100);
+          },
+          function (error) {
+            /*rejected callback*/
+            console.log("There was an error running the Toaster.open command:", error);
+          }
+        );
+      });
     }
   }, [cookieConsent]);
 

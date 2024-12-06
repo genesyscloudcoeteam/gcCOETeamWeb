@@ -1,14 +1,14 @@
 /* global Genesys */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { executeAcCommand } from "../utils/acHelper";
+import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
   const [isGenesysReady, setIsGenesysReady] = useState(false);
 
   useEffect(() => {
     const checkGenesysAvailability = () => {
-      if (window.Genesys || window.ac) {
+      if (window.Genesys) {
         //console.log("Genesys is ready and cookies option has been selected.");
         setIsGenesysReady(true);
       } else {

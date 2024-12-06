@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState } from "react";
 import axios from "axios";
-import { executeAcCommand } from "../utils/acHelper";
+import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const LoginModal = ({ cookieConsent, onClose }) => {
   const [email, setEmail] = useState("");
@@ -31,39 +31,27 @@ const LoginModal = ({ cookieConsent, onClose }) => {
       if (cookieConsent === "accept") {
         console.log("Cookie consent accepted. Proceeding with Genesys logic.");
 
-        if (window.ac) {
+        if (window.Genesys) {
           console.log("Genesys object is available. Recording login event.");
 
-          //Genesys("command", "Journey.record", {
-          //  eventName: "userLogin",
-          //  customAttributes: {
-          //    isLoginFormSubmitted: true,
-          //    email: userEmail,
-          //    givenName: firstName,
-          //    familyName: lastName,
-          //    crmId: crmId,
-          //  },
-          //  traitsMapper: [
-          //    { fieldName: "email"},
-          //    { fieldName: "givenName"},
-          //    { fieldName: "familyName"},
-          //  ],
-          //});
-
-          executeAcCommand('record', 'userLogin', {
+          executeGenesysCommand("command", "Journey.record", {
+            eventName: "userLogin",
+            customAttributes: {
               isLoginFormSubmitted: true,
               email: userEmail,
               givenName: firstName,
               familyName: lastName,
               crmId: crmId,
-             //},
-             //   [
-             //     { fieldName: "email", fieldName: "givenName", fieldName: "familyName"}
-             //   ],
-              });
+            },
+            traitsMapper: [
+              { fieldName: "email" },
+              { fieldName: "givenName" },
+              { fieldName: "familyName" },
+            ],
+          });
 
           console.log("Genesys: User login event recorded.");
-         
+
         } else {
           console.error("Genesys object is not available. Ensure Genesys script is loaded.");
         }

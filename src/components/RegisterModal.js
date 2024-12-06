@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState } from "react";
 import axios from "axios";
-import { executeAcCommand } from "../utils/acHelper";
+import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const RegisterModal = ({ cookieConsent, onClose }) => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
           type: "register",
           firstName: formData.firstName,
           lastName: formData.lastName,
-          email: formData.email          
+          email: formData.email
         }
       );
 
@@ -41,30 +41,17 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
 
       console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.ac);
-      
-      //if (cookieConsent === "accept" && window.Genesys) {
-      //  Genesys("command", "Journey.formsTrack", {
-      //    selector: "#registration-form",
-      //    formName: "registration",
-      //    captureFormDataOnAbandon: false,
-      //    captureFormDataOnSubmit: false,
-      //    customAttributes: { 
-      //      isRegistrationSubmitted: true, 
-      //   },
-      //  });
-      //  console.log("Genesys: User Registration Submitted");
-      //}
 
-      if (cookieConsent === "accept" && window.ac) {
-        executeAcCommand('forms:track', '#registration-form', 
-          {
-            captureFormDataOnAbandon: false,
-            captureFormDataOnSubmit: false,
-            customAttributes: { 
-              isRegistrationSubmitted: true, 
-         },
+      if (cookieConsent === "accept" && window.Genesys) {
+        executeGenesysCommand("command", "Journey.formsTrack", {
+          selector: "#registration-form",
+          formName: "registration",
+          captureFormDataOnAbandon: false,
+          captureFormDataOnSubmit: false,
+          customAttributes: {
+            isRegistrationSubmitted: true,
+          },
         });
-           
         console.log("Genesys: User Registration Submitted");
       }
 
@@ -74,58 +61,40 @@ const RegisterModal = ({ cookieConsent, onClose }) => {
       alert("An error occurred while registering. Please try again.");
 
       console.log("Registration form exists:", document.querySelector("#registration-form"));
-      console.log("Genesys is ready:", !!window.GenesysTrackingScript);
+      console.log("Genesys is ready:", !!window.Genesys);
 
-      if (cookieConsent === "accept" && window.ac) {
-        //Genesys("command", "Journey.formsTrack", {
-        //  selector: "#registration-form",
-        //  formName: "registration",
-        //  captureFormDataOnAbandon: false,
-        //  captureFormDataOnSubmit: false,
-        //  customAttributes: {
-        //    isRegistrationSubmitted: false,
-        //  },
-
-        executeAcCommand('forms:track', '#registration-form', 
-          {
-            captureFormDataOnAbandon: false,
-            captureFormDataOnSubmit: false,
-            customAttributes: { 
-              isRegistrationSubmitted: false, 
-         },
+      if (cookieConsent === "accept" && window.Genesys) {
+        executeGenesysCommand("command", "Journey.formsTrack", {
+          selector: "#registration-form",
+          formName: "registration",
+          captureFormDataOnAbandon: false,
+          captureFormDataOnSubmit: false,
+          customAttributes: {
+            isRegistrationSubmitted: false,
+          },
         });
         console.log("Genesys: User Registration Failed");
       }
-
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancel = () => {
-    if (cookieConsent === "accept" && window.ac) {
+    if (cookieConsent === "accept" && window.Genesys) {
 
       console.log("Registration form exists:", document.querySelector("#registration-form"));
       console.log("Genesys is ready:", !!window.ac);
 
-      //Genesys("command", "Journey.formsTrack", {
-      //  selector: "#registration-form",
-      //  formName: "registration",
-      //  captureFormDataOnAbandon: false,
-      //  captureFormDataOnSubmit: false,
-      //  customAttributes: {
-      //    isRegistrationSubmitted: false,
-      //  },
-      //});
-      executeAcCommand('forms:track', '#registration-form', 
-        {
-          captureFormDataOnAbandon: false,
-          captureFormDataOnSubmit: false,
-          customAttributes: { 
-            isRegistrationSubmitted: false, 
-       },
+      executeGenesysCommand("command", "Journey.formsTrack", {
+        selector: "#registration-form",
+        formName: "registration",
+        captureFormDataOnAbandon: false,
+        captureFormDataOnSubmit: false,
+        customAttributes: {
+          isRegistrationSubmitted: false,
+        },
       });
-
       console.log("Genesys: User Registration Cancelled");
     }
 
