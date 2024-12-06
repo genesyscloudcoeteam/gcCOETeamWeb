@@ -77,18 +77,7 @@ const App = () => {
           },
           function () {
             /*fulfilled callback*/
-            console.log("Toaster is opened");
-            executeGenesysCommand("command", "Messenger.open",
-              {},
-              function () {
-                /*fulfilled callback*/
-                console.log("Toaster offer accepted, messenger opened.")
-              },
-              function () {
-                /*rejected callback*/
-                console.log("Toaster offer accepted, but messenger could not be opened.")
-              }
-            );
+            console.log("Toaster is opened");           
           },
           function (error) {
             /*rejected callback*/
@@ -96,6 +85,21 @@ const App = () => {
           }
         );
       });
+
+      executeGenesysCommand("subscribe", "Toaster.accepted",
+        function (e) {
+          console.log("Toaster was accepted", e);
+          executeGenesysCommand("command", "Messenger.open",
+            {},
+                function() {
+                    console.log("Toaster accepted, opening messenger");
+                },
+                function() {
+                  console.log("Toaster accepted, bit could not open messenger")
+                }
+            );
+        }
+      );
 
     } else if (cookieConsent === "decline") {
       console.log("User declined cookies. Loading alternative Genesys script.");
@@ -122,18 +126,7 @@ const App = () => {
           },
           function () {
             /*fulfilled callback*/
-            console.log("Toaster is opened");
-            executeGenesysCommand("command", "Messenger.open",
-              {},
-              function () {
-                /*fulfilled callback*/
-                console.log("Toaster offer accepted, messenger opened.")
-              },
-              function () {
-                /*rejected callback*/
-                console.log("Toaster offer accepted, but messenger could not be opened.")
-              }
-            );
+             console.log("Toaster is opened");
           },
           function (error) {
             /*rejected callback*/
@@ -141,6 +134,21 @@ const App = () => {
           }
         );
       });
+
+      executeGenesysCommand("subscribe", "Toaster.accepted",
+        function (e) {
+          console.log("Toaster was accepted", e);
+          executeGenesysCommand("command", "Messenger.open",
+            {},
+                function() {
+                    console.log("Toaster accepted, opening messenger");
+                },
+                function() {
+                  console.log("Toaster accepted, bit could not open messenger")
+                }
+            );
+        }
+      );
     }
   }, [cookieConsent]);
 
