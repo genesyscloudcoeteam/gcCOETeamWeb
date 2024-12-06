@@ -12,6 +12,7 @@ import Checkout from "./components/Checkout";
 import CookieConsent from "./components/CookieConsent";
 import RegisterModal from "./components/RegisterModal";
 import LoginModal from "./components/LoginModal";
+import Register from "./components/Register";
 import { executeGenesysCommand } from "./utils/genesysHelper";
 
 const App = () => {
@@ -184,16 +185,11 @@ const App = () => {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/register" element={<Register cookieConsent={cookieConsent} />} />
         </Routes>
       </main>
       <Footer />
       <CookieConsent onConsent={(consent) => setCookieConsent(consent)} />
-      {isRegisterModalOpen && (
-        <RegisterModal
-          cookieConsent={cookieConsent}
-          onClose={() => setIsRegisterModalOpen(false)}
-        />
-      )}
       {isLoginModalOpen && (
         <LoginModal
           cookieConsent={cookieConsent}

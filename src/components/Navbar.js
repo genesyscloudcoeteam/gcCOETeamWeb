@@ -5,6 +5,7 @@ import { executeGenesysCommand } from "../utils/genesysHelper";
 
 const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
   const [isGenesysReady, setIsGenesysReady] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkGenesysAvailability = () => {
@@ -25,6 +26,11 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
   }, [cookieConsent]);
+
+  const handleRegisterClick = () => {
+    // Navigate to the Register page
+    navigate("/register");
+  };
 
   return (
     <nav className="navbar">
@@ -48,7 +54,7 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
       <div className="navbar-buttons">
         {isGenesysReady && (
           <>
-            <button onClick={onRegisterClick}>Register</button>
+            <button onClick={handleRegisterClick}>Register</button>
             <button onClick={onLoginClick}>Login</button>
           </>
         )}
