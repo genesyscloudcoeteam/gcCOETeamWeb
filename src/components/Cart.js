@@ -1,7 +1,7 @@
 /* global Genesys */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { executeGenesysCommand } from "./utils/genesysHelper";
+import { executeGenesysCommand } from "../utils/genesysHelper";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);

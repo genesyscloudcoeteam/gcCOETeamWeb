@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { executeGenesysCommand } from "./utils/genesysHelper";
+import { executeGenesysCommand } from "../utils/genesysHelper";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);

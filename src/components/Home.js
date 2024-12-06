@@ -1,6 +1,6 @@
 /* global Genesys */
 import React from "react";
-import { executeGenesysCommand } from "./utils/genesysHelper";
+import { executeGenesysCommand } from "../utils/genesysHelper";
 
 const Home = () => {
   return (
