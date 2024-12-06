@@ -76,7 +76,10 @@ const Register = ({ cookieConsent }) => {
   return (
     <div className="register-page">
       <div className="register-image">
-        <img src="/images/registration.png" alt="Registration" />
+      <img
+          src={`${process.env.PUBLIC_URL}/images/registration.png`} // Use PUBLIC_URL
+          alt="Registration"
+        />
       </div>
       <div className="register-form">
         <h2>Register</h2>
