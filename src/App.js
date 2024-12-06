@@ -86,13 +86,13 @@ const App = () => {
               },
               function () {
                 /*rejected callback*/
-                console.log("Toaster offer accepted, but messenger could not be opened.", error)
+                console.log("Toaster offer accepted, but messenger could not be opened.")
               }
             );
           },
           function (error) {
             /*rejected callback*/
-            console.log("There was an error running the Toaster.open command:", error);
+            console.error("There was an error running the Toaster.open command:", error);
           }
         );
       });
@@ -131,7 +131,7 @@ const App = () => {
               },
               function () {
                 /*rejected callback*/
-                console.log("Toaster offer accepted, but messenger could not be opened.", error)
+                console.log("Toaster offer accepted, but messenger could not be opened.")
               }
             );
           },
