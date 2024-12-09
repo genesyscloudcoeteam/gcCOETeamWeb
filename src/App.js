@@ -161,6 +161,7 @@ const App = () => {
       "/shop": "Shop",
       "/cart": "Cart",
       "/checkout": "Checkout",
+      "/register": "Register",
     };
 
     const currentTitle = location.pathname.startsWith("/product/")

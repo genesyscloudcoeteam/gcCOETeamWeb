@@ -54,8 +54,12 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
       <div className="navbar-buttons">
         {isGenesysReady && (
           <>
-            <button onClick={handleRegisterClick}>Register</button>
-            <button onClick={onLoginClick}>Login</button>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <button onClick={onLoginClick}>Login</button>
+            </li>
           </>
         )}
       </div>
