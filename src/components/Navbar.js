@@ -50,13 +50,15 @@ const Navbar = ({ onRegisterClick, onLoginClick, cookieConsent }) => {
         <li>
           <Link to="/checkout">Checkout</Link>
         </li>
+        <li>
+          {isGenesysReady && (
+            <Link to="/register">Register</Link>
+          )}
+        </li>
       </ul>
       <div className="navbar-buttons">
         {isGenesysReady && (
           <>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
             <li>
               <button onClick={onLoginClick}>Login</button>
             </li>

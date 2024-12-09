@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { executeGenesysCommand } from "../utils/genesysHelper";
+import { useNavigate } from "react-router-dom";
 
 const Register = ({ cookieConsent }) => {
   const [formData, setFormData] = useState({
@@ -49,6 +50,10 @@ const Register = ({ cookieConsent }) => {
         });
         console.log("Genesys: User Registration Submitted");
       }
+
+      // Navigate to previous window on success
+      window.history.back();
+
     } catch (error) {
       console.error("Error during registration:", error);
       alert("An error occurred while registering. Please try again.");
@@ -64,11 +69,11 @@ const Register = ({ cookieConsent }) => {
         });
         console.log("Genesys: User Registration Failed");
       }
+
     } finally {
       setLoading(false);
     }
   };
-
   const handleCancel = () => {
     window.history.back();
   };
@@ -76,7 +81,7 @@ const Register = ({ cookieConsent }) => {
   return (
     <div className="register-page">
       <div className="register-image">
-      <img
+        <img
           src={`${process.env.PUBLIC_URL}/images/registration.png`} // Use PUBLIC_URL
           alt="Registration"
         />

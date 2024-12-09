@@ -193,7 +193,7 @@ a:hover {
 form input {
     display: block;
     width: 100%;
-    max-width: 350px;
+    max-width: fit-content;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
