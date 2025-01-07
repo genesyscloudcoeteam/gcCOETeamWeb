@@ -117,11 +117,6 @@ home-page {
   padding: 10px;
 }
 
-home-page img {
-  width: 100%;
-  height: auto;  
-}
-
 /* Buttons */
 button {
     background-color: var(--tertiary-color);
@@ -139,7 +134,9 @@ button:hover {
 }
 
 /* Headings */
-h1,
+h1 {
+  text-align: center;
+}
 h2,
 h3,
 h4,
