@@ -132,7 +132,7 @@ footer {
   position: relative;
   width: 100%;
   max-width: 800px; /* Control max width of the image container */
-  margin: 20px auto; /* Add spacing above and below */
+  margin: 20px 20px; /* Add spacing above and below */
 }
 
 .fade-image {
