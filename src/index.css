@@ -111,11 +111,40 @@ footer {
 }
 
 /* Home Page Content */
-home-page {
-  align-content: center;
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 10px;
+  height: 100vh; /* Full viewport height */
+  background-color: var(--secondary-color);
 }
+
+.home-content {
+  max-width: 80%; /* Prevent content from stretching too wide */
+  text-align: center;
+}
+
+/* Fade Image Container */
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Optional: Control max width of the image container */
+  margin: 0 auto;
+}
+
+.fade-image {
+  width: 100%;
+  max-width: 100%; /* Image resizes with container */
+  height: auto; /* Maintain aspect ratio */
+  position: relative;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0));
+}
+
 
 /* Buttons */
 button {
