@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/gcCOETeamWeb/static/css/main.cdb3b591.css",
-    "main.js": "/gcCOETeamWeb/static/js/main.f121e38b.js",
+    "main.css": "/gcCOETeamWeb/static/css/main.976c3f36.css",
+    "main.js": "/gcCOETeamWeb/static/js/main.bfa2a276.js",
     "index.html": "/gcCOETeamWeb/index.html",
-    "main.cdb3b591.css.map": "/gcCOETeamWeb/static/css/main.cdb3b591.css.map",
-    "main.f121e38b.js.map": "/gcCOETeamWeb/static/js/main.f121e38b.js.map"
+    "main.976c3f36.css.map": "/gcCOETeamWeb/static/css/main.976c3f36.css.map",
+    "main.bfa2a276.js.map": "/gcCOETeamWeb/static/js/main.bfa2a276.js.map"
   },
   "entrypoints": [
-    "static/css/main.cdb3b591.css",
-    "static/js/main.f121e38b.js"
+    "static/css/main.976c3f36.css",
+    "static/js/main.bfa2a276.js"
   ]
 }
