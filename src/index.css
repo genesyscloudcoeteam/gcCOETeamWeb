@@ -118,7 +118,7 @@ footer {
   justify-content: flex-start; /* Align content to the top */
   text-align: center;
   padding: 20px;
-  min-height: calc(100vh - 60px); /* Adjust for footer height */
+  max-height: calc(100vh - 60px); /* Adjust for footer height */
   box-sizing: border-box; /* Include padding in height calculations */
 }
 
