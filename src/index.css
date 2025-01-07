@@ -136,7 +136,7 @@ footer {
 }
 
 .fade-image {
-  display: block;
+  /* display: block; */
   width: 100%;
   max-width: 100%; /* Image resizes with container */
   height: auto; /* Maintain aspect ratio */
