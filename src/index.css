@@ -117,19 +117,6 @@ home-page {
   padding: 10px;
 }
 
-homepage-paragraph {
-  align-content: center;
-  text-align: center;
-  justify-content: center;
-}
-
-homepage-img {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-}
-
 /* Buttons */
 button {
     background-color: var(--tertiary-color);
