@@ -113,8 +113,13 @@ footer {
 /* Home Page Content */
 home-page {
   align-content: center;
-  justify-content: center;
+  text-align: center;
   padding: 10px;
+}
+
+home-page img {
+  width: 100%;
+  height: auto;  
 }
 
 /* Buttons */
