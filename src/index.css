@@ -117,6 +117,16 @@ home-page {
   padding: 10px;
 }
 
+homepage-paragraph {
+  text-align: center;
+}
+
+homepage-img {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
 /* Buttons */
 button {
     background-color: var(--tertiary-color);

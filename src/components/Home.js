@@ -6,8 +6,8 @@ const Home = () => {
   return (
     <div className="home-page">
       <h1>Welcome to Demo Retail Store</h1>
-      <p>Your one-stop shop for all things amazing!</p>
-      <img
+      <p className="homepage-paragraph">Your one-stop shop for all things amazing!</p>
+      <img className="homepage-img"
       src={`${process.env.PUBLIC_URL}/images/retailImages.jpg`} // Use PUBLIC_URL
       alt="Homepage"
     />
