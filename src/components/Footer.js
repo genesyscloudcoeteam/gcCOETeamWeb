@@ -5,7 +5,7 @@ import { executeGenesysCommand } from "../utils/genesysHelper";
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; 2024 Genesys Cloud COE Team Demo Website. All Rights Reserved.</p>
+      <p>&copy; 2025 Genesys Cloud COE Team Demo Website. All Rights Reserved.</p>
     </footer>
   );
 };

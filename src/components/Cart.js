@@ -22,7 +22,7 @@ const Cart = () => {
   };
 
   return (
-    <div>
+    <div className="cart-page">
       <h1>Your Cart</h1>
       <ul>
         {cart.map((item) => (

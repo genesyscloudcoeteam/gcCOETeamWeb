@@ -142,6 +142,10 @@ footer {
   height: auto; /* Maintain aspect ratio */
 }
 
+.cart-page {
+  text-align: center;
+}
+
 
 /* Buttons */
 button {

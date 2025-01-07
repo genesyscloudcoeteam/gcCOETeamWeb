@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="home-content">
-        <h1>Welcome to Demo Retail Store</h1>
+        <h1>Welcome to our Demo Retail Store</h1>
         <p>Your one-stop shop for all things amazing!</p>
         <div className="image-container">
             <img
