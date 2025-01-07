@@ -118,11 +118,14 @@ home-page {
 }
 
 homepage-paragraph {
+  align-content: center;
   text-align: center;
+  justify-content: center;
 }
 
 homepage-img {
   display: flex;
+  justify-content: center;
   width: 100%;
   height: auto;
 }
