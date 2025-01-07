@@ -106,7 +106,7 @@ footer {
   text-align: center;
   padding: 10px;
   width: 100%;
-  position: relative;
+  position: static; /* Ensure it stays in the normal flow */
   bottom: 0;
 }
 
@@ -117,8 +117,9 @@ footer {
   align-items: center; /* Center horizontally */
   justify-content: flex-start; /* Align content to the top */
   text-align: center;
-  padding: 20px; /* Add some spacing */
+  padding: 20px;
   min-height: calc(100vh - 60px); /* Adjust for footer height */
+  box-sizing: border-box; /* Include padding in height calculations */
 }
 
 .home-content {
@@ -129,19 +130,21 @@ footer {
 /* Fade Image Container */
 .image-container {
   position: relative;
-  display: flex;
-  justify-content: center; /* Center the image horizontally */
   width: 100%;
-  max-width: 800px; /* Optional: Control max width of the image container */
+  max-width: 800px; /* Control max width of the image container */
   margin: 20px auto; /* Add spacing above and below */
 }
 
+.image-fade-wrapper {
+  position: relative;
+  overflow: hidden; /* Prevent fade effect from spilling outside */
+}
+
 .fade-image {
+  display: block;
   width: 100%;
   max-width: 100%; /* Image resizes with container */
   height: auto; /* Maintain aspect ratio */
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0));
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0));
 }
 
 
