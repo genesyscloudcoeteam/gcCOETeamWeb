@@ -135,11 +135,6 @@ footer {
   margin: 20px auto; /* Add spacing above and below */
 }
 
-.image-fade-wrapper {
-  position: relative;
-  overflow: hidden; /* Prevent fade effect from spilling outside */
-}
-
 .fade-image {
   display: block;
   width: 100%;
