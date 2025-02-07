@@ -1,6 +1,6 @@
 /* global Genesys */
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -173,6 +173,7 @@ const App = () => {
   }, [location]);
 
   return (
+    <Router>
     <div id="root">
       <Navbar
         onRegisterClick={() => setIsRegisterModalOpen(true)}
@@ -180,7 +181,7 @@ const App = () => {
         cookieConsent={cookieConsent}
       />
       <main>
-        <SearchHandler /> {/* Search results will appear here */}
+      <SearchHandler /> {/* ✅ Ensure search results appear within the main content */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -200,6 +201,7 @@ const App = () => {
         />
       )}
     </div>
+    </Router>
   );
 };
 

@@ -18,10 +18,10 @@ const SearchHandler = () => {
         matchedPage = "/shop";
       } else if (lowerCaseQuery === "about") {
         matchedPage = "/about";
-      } else if (lowerCaseQuery === "home") {
-        matchedPage = "/";
     } else if (lowerCaseQuery === "cart") {
         matchedPage = "/cart";
+      } else if (lowerCaseQuery === "home") {
+        matchedPage = "/";
       }
 
       setSearchResult(matchedPage);
