@@ -389,3 +389,30 @@ form button[type="button"]:hover {
     background-color: #ccc;
     color: black;
   }
+
+  /* Search results box */
+.search-results {
+  text-align: center;
+  background: #f1f1f1;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Search link button */
+.search-link {
+  display: inline-block;
+  background: var(--tertiary-color);
+  color: var(--text-color-light);
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.search-link:hover {
+  background: #e03f18;
+}

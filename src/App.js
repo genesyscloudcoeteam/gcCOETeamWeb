@@ -14,6 +14,7 @@ import RegisterModal from "./components/RegisterModal";
 import LoginModal from "./components/LoginModal";
 import Register from "./components/Register";
 import { executeGenesysCommand } from "./utils/genesysHelper";
+import SearchHandler from "./components/SearchHandler";
 
 const App = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
@@ -179,6 +180,7 @@ const App = () => {
         cookieConsent={cookieConsent}
       />
       <main>
+        <SearchHandler /> {/* Search results will appear here */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
