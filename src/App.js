@@ -48,6 +48,7 @@ const App = () => {
       })(window, "Genesys", "https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js", {
         environment: "prod-euw1",
         deploymentId: deploymentId,
+        ipAddress: "",
       });
     }
   };
