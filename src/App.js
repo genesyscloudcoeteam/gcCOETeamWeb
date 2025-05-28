@@ -48,7 +48,6 @@ const App = () => {
       })(window, "Genesys", "https://apps.mypurecloud.ie/genesys-bootstrap/genesys.min.js", {
         environment: "prod-euw1",
         deploymentId: deploymentId,
-        ipAddress: "",
       });
     }
   };
@@ -61,8 +60,10 @@ const App = () => {
       // Load the Genesys script
       // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
       // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
-
-      loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+      // SPCDemo in inin-za-pso Org = 3a1066c0-c76c-4dea-bea0-8fb035a90669
+      
+      //loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
+      loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
 
       // Subscribe to Genesys events
       executeGenesysCommand("subscribe", "Toaster.ready", () => {
@@ -110,8 +111,10 @@ const App = () => {
       // Load the Genesys script
       // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
       // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
+      // SPCDemo in inin-za-pso Org = 3a1066c0-c76c-4dea-bea0-8fb035a90669
 
-      loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+      //loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
+      loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
 
       // Subscribe to Genesys events
       executeGenesysCommand("subscribe", "Toaster.ready", () => {
