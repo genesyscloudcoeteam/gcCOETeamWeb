@@ -61,9 +61,11 @@ const App = () => {
       // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
       // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
       // SPCDemo in inin-za-pso Org = 3a1066c0-c76c-4dea-bea0-8fb035a90669
+      // Demo home in invictus Org = abf2aae5-1197-4b64-a330-ec8663f093fa
       
       //loadGenesysScript("e20c3572-d92f-4518-9b9d-0049083dc914");
-      loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
+      //loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
+      loadGenesysScript("abf2aae5-1197-4b64-a330-ec8663f093fa");
 
       // Subscribe to Genesys events
       executeGenesysCommand("subscribe", "Toaster.ready", () => {
@@ -112,9 +114,11 @@ const App = () => {
       // gcCOETeam - Messenger Only = 92f95b32-1773-40f4-a3c3-9efbc734dc10
       // gcCOETeam = e20c3572-d92f-4518-9b9d-0049083dc914
       // SPCDemo in inin-za-pso Org = 3a1066c0-c76c-4dea-bea0-8fb035a90669
+      // Demo home in invictus Org = abf2aae5-1197-4b64-a330-ec8663f093fa
 
       //loadGenesysScript("92f95b32-1773-40f4-a3c3-9efbc734dc10");
-      loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
+      //loadGenesysScript("3a1066c0-c76c-4dea-bea0-8fb035a90669");
+      loadGenesysScript("abf2aae5-1197-4b64-a330-ec8663f093fa");
 
       // Subscribe to Genesys events
       executeGenesysCommand("subscribe", "Toaster.ready", () => {
